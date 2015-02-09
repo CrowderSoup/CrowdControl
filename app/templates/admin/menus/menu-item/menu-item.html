@@ -1,0 +1,82 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ super() }} - Menu Item: {{ menu_item.name }}{% endblock %}
+
+{% block page_content %}
+
+    <h1 class="page-header">
+        Edit Menu Item
+    </h1>
+
+    <form
+        role="form"
+        id="menu-item-form"
+        method="POST"
+        action="{{ url_for('.menu_item', menu_id=menu_item.menu_id, item_id=menu_item.id) }}">
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    {{ form.name.label(class="control-label") }}
+                    {{ form.name(class="form-control") }}
+                    {% if form.name.errors %}
+                        <ul class="errors">
+                            {% for error in form.name.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.weight.label(class="control-label") }}
+                    {{ form.weight(class="form-control") }}
+                    {% if form.weight.errors %}
+                        <ul class="errors">
+                            {% for error in form.weight.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    {{ form.menu.label(class="control-label") }}
+                    {{ form.menu(class="form-control") }}
+                    {% if form.menu.errors %}
+                        <ul class="errors">
+                            {% for error in form.menu.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.slug.label(class="control-label") }}
+                    {{ form.slug(class="form-control") }}
+                    {% if form.slug.errors %}
+                        <ul class="errors">
+                            {% for error in form.theSlug.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9 text-right">
+                <div class="form-group">
+                    {{ form.csrf_token }}
+
+                    <a href="{{ url_for(".menu", menu_id=menu_item.menu_id) }}" class="btn btn-link">Cancel</a>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}

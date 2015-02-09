@@ -1,0 +1,40 @@
+body {
+  margin-top: 41px;
+}
+
+.post-list h3 {
+    margin: 0 0 0 0;
+}
+
+.post-list p.info {
+    font-size: 12px;
+    font-style: italic;
+}
+
+/*.category-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}*/
+
+.category-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: solid 1px #dddddd;
+    border-radius: 4px;
+    background: #ffffff;
+}
+
+.category-list li {
+    padding: 10px 15px;
+    border-bottom: solid 1px #dddddd;
+}
+
+.category-list li:last-child {
+    border-bottom: none;
+}
+
+.category-list li .badge {
+    float: right;
+}

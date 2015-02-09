@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ super() }} - Menu: {{ menu.name }}{% endblock %}
+
+{% block page_content %}
+
+    <form role="form" id="menu-form" method="POST" action="{{ url_for('.menu', menu_id=menu.id) }}">
+        <div class="form-group">
+            {{ form.name.label(class="control-label") }}
+            <div class="input-group">
+                {{ form.name(class="form-control") }}
+                {{ form.csrf_token }}
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+                </span>
+            </div>
+            {% if form.name.errors %}
+                <ul class="errors">
+                    {% for error in form.name.errors %}
+                        <li class="small">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </form>
+
+    <hr />
+
+    <h1 class="page-header">
+        Menu Items
+        <a href="{{ url_for('.add_menu_item', menu_id=menu.id) }}" class="btn btn-primary pull-right">
+            <i class="fa fa-plus"></i>Add
+        </a>
+    </h1>
+
+    <table class="table table-bordered table-stripped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Item Weight</th>
+                <th>Created On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for menu_item in menu_items %}
+                <tr>
+                    <td>{{ menu_item.name }}</td>
+                    <td>{{ menu_item.slug }}</td>
+                    <td>{{ menu_item.weight }}</td>
+                    <td>{{ menu_item.created_on|datetime }}</td>
+                    <td>
+                        <a href="{{ url_for('.menu_item', menu_id=menu.id, item_id=menu_item.id) }}" class="btn btn-primary">
+                            <i class="fa fa-edit"></i>Edit
+                        </a>
+                        <a href="{{ url_for('.delete_menu_item', menu_id=menu.id, item_id=menu_item.id) }}" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>Delete
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

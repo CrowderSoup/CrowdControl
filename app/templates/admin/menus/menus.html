@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ super() }} - Menus{% endblock %}
+
+{% block page_content %}
+
+    <h1 class="page-header">
+        Menus
+        <a href="{{ url_for('.add_menu') }}" class="btn btn-primary pull-right">
+            <i class="fa fa-plus"></i>Add
+        </a>
+    </h1>
+
+    <table class="table table-bordered table-stripped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Created On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for menu in menus %}
+                <tr>
+                    <td>{{ menu.name }}</td>
+                    <td>{{ menu.created_on|datetime }}</td>
+                    <td>
+                        <a href="{{ url_for('.menu', menu_id=menu.id) }}" class="btn btn-primary">
+                            <i class="fa fa-edit"></i>Edit
+                        </a>
+                        <a href="{{ url_for('.delete_menu', menu_id=menu.id) }}" class="btn btn-danger">
+                            <i class="fa fa-trash"></i>Delete
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

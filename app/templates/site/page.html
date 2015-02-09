@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} &mdash; {{ page.Title }}{% endblock %}
+
+{% block page_content %}
+
+    {{ page.Content|safe }}
+
+{% endblock %}

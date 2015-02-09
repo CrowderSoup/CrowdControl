@@ -1,0 +1,89 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ super() }} - Add User{% endblock %}
+
+{% block page_content %}
+
+    <h1 class="page-header">Add User</h1>
+
+    <form role="form" id="page-form" method="POST" action="{{ url_for('.add_user') }}">
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    {{ form.email.label(class="control-label") }}
+                    {{ form.email(class="form-control") }}
+                    {% if form.email.errors %}
+                        <ul class="errors">
+                            {% for error in form.email.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.username.label(class="control-label") }}
+                    {{ form.username(class="form-control") }}
+                    {% if form.username.errors %}
+                        <ul class="errors">
+                            {% for error in form.username.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password.label(class="control-label") }}
+                    {{ form.password(class="form-control") }}
+                    {% if form.password.errors %}
+                        <ul class="errors">
+                            {% for error in form.password.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password2.label(class="control-label") }}
+                    {{ form.password2(class="form-control") }}
+                    {% if form.password2.errors %}
+                        {% for error in form.password2.errors %}
+                            <ul class="errors">
+                                <li class="small">{{ error }}</li>
+                            </ul>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    {{ form.role.label(class="control-label") }}
+                    {{ form.role(class="form-control") }}
+                    {% if form.role.errors %}
+                        <ul class="errors">
+                            {% for error in form.role.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-9 text-right">
+                <div class="form-group">
+                    {{ form.csrf_token }}
+
+                    <a href="{{ url_for(".users") }}" class="btn btn-link">Cancel</a>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

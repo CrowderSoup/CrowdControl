@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} &mdash; Blog{% endblock %}
+
+{% block page_content %}
+
+    <div class="page-header">
+        <h1>Blog <small>Random thoughts and ramblings</small></h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="post-list">
+            {% for post in posts %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h3><a href="{{ url_for('blog.blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        {{ post.content|safe }}
+                    </div>
+                    <div class="panel-footer">
+                        <p class="info">
+                            Posted on {{ post.created_on|datetime }}
+                        </p>
+                    </div>
+                </div>
+            {% else %}
+                <h3>Sorry! No posts found.</h3>
+            {% endfor %}
+            </div>
+            <nav>
+                <ul class="pager">
+                    <li class="previous {{ 'disabled' if not blogPosts.has_next else '' }}">
+                        {% if blogPosts.has_next %}
+                            <a href="{{ url_for('blog.the_blog', page=blogPosts.next_num) }}"><span aria-hidden="true">&larr;</span> Older</a>
+                        {% else %}
+                            <a><span aria-hidden="true">&larr;</span> Older</a>
+                        {% endif %}
+                    </li>
+                    <li class="next {{ 'disabled' if not blogPosts.has_prev else '' }}">
+                        {% if blogPosts.has_prev %}
+                            <a href="{{ url_for('blog.the_blog', page=blogPosts.prev_num) }}">Newer <span aria-hidden="true">&rarr;</span></a>
+                        {% else %}
+                            <a>Newer <span aria-hidden="true">&rarr;</span></a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-3">
+            <ul class="category-list">
+                {% for category in categories %}
+                    <li>
+                        <a>{{ category.name }}</a>
+                        <span class="badge">{{ category.blogposts.all()|length }}</span>
+                    </li>
+                {% else %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
