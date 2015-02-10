@@ -1,7 +1,7 @@
 {% extends "admin/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}{{ super() }} - Edit Post{% endblock %}
+{% block title %}{{ super() }} - Index{% endblock %}
 
 {% block styles %}
     {{ super() }}
@@ -14,9 +14,9 @@
 
 {% block page_content %}
 
-    <h1 class="page-header">Edit Post</h1>
+    <h1 class="page-header">Add Post</h1>
 
-    <form role="form" id="page-form" method="POST" action="{{ url_for('.edit_post', post_id=post.id) }}">
+    <form role="form" id="page-form" method="POST" action="{{ url_for('.add_blog_post') }}">
         <div class="row">
             <div class="col-md-9">
                 <div class="form-group">
@@ -85,13 +85,24 @@
                         </ul>
                     {% endif %}
                 </div>
+                <div class="form-group">
+                    {{ form.category.label(class="control-label") }}
+                    {{ form.category(class="form-control") }}
+                    {% if form.category.errors %}
+                        <ul class="errors">
+                            {% for error in form.category.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-9 text-right">
                 {{ form.csrf_token }}
 
-                <a href="{{ url_for(".posts") }}" class="btn btn-link">Cancel</a>
+                <a href="{{ url_for(".blog_posts") }}" class="btn btn-link">Cancel</a>
                 <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
             </div>
         </div>

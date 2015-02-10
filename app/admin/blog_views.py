@@ -2,19 +2,19 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash, abort
 from flask.ext.login import login_required, current_user
 from . import admin
-from ..models import db, BlogPost
-from .forms import EditPostForm, AddPostForm
+from ..models import db, BlogPost, BlogCategory
+from .forms import EditPostForm, AddPostForm, EditCategoryForm
 
-@admin.route('/posts')
+@admin.route('/blog/posts')
 @login_required
-def posts():
-    all_posts = BlogPost.query.all()
-    return render_template('admin/posts/posts.html', posts=all_posts)
+def blog_posts():
+    all_posts = BlogPost.query.order_by(BlogPost.published_on)
+    return render_template('admin/blog/posts/posts.html', posts=all_posts)
 
 
-@admin.route('/posts/post/<post_id>', methods=['GET', 'POST'])
+@admin.route('/blog/posts/post/<post_id>', methods=['GET', 'POST'])
 @login_required
-def edit_post(post_id):
+def edit_blog_post(post_id):
     form = EditPostForm()
     post = BlogPost.query.filter_by(id=post_id).first()
 
@@ -26,31 +26,25 @@ def edit_post(post_id):
         post.title = form.title.data
         post.content = form.content.data
         post.published_on = form.published_on.data
-
-        # If the user isn't set, let's set it to the current user.
-        if post.user_id is None:
-            post.user_id = current_user.id
-
-        # If created_on isn't set let's set it (this SHOULDN'T happen)
-        if post.created_on is None:
-            post.created_on = datetime.utcnow()
+        post.blogcategory_id = form.category.data
 
         db.session.add(post)
         flash('"{0}" has been saved'.format(post.title))
 
-        return redirect(url_for('.posts'))
+        return redirect(url_for('.blog_posts'))
 
     form.slug.data = post.slug
     form.title.data = post.title
     form.content.data = post.content
     form.published_on.data = post.published_on
+    form.category.data = post.blogcategory_id
 
-    return render_template('admin/posts/edit_post.html', form=form, post=post)
+    return render_template('admin/blog/posts/edit_post.html', form=form, post=post)
 
 
-@admin.route('/posts/new', methods=['GET', 'POST'])
+@admin.route('/blog/posts/new', methods=['GET', 'POST'])
 @login_required
-def add_post():
+def add_blog_post():
     form = AddPostForm()
 
     if form.validate_on_submit():
@@ -62,25 +56,91 @@ def add_post():
         post.published_on = form.published_on.data
         post.user_id = current_user.id
         post.created_on = datetime.utcnow()
+        post.blogcategory_id = form.category.data
 
         db.session.add(post)
         flash('"{0}" has been saved'.format(post.title))
 
-        return redirect(url_for('.posts'))
+        return redirect(url_for('.blog_posts'))
 
-    return render_template('admin/posts/add_post.html', form=form)
+    return render_template('admin/blog/posts/add_post.html', form=form)
 
 
-@admin.route('/posts/delete/<post_id>', methods=['GET', 'POST'])
+@admin.route('/blog/posts/delete/<post_id>', methods=['GET', 'POST'])
 @login_required
-def delete_post(post_id):
+def delete_blog_post(post_id):
     post = BlogPost.query.filter_by(id=post_id).first()
 
     if post is not None:
         db.session.delete(post)
 
         flash('"{0}" has been deleted.'.format(post.title))
-        return redirect(url_for('.posts'))
+        return redirect(url_for('.blog_posts'))
 
-    flash('Page does not exist')
-    return redirect(url_for('.posts'))
+    flash('Post does not exist')
+    return redirect(url_for('.blog_posts'))
+
+
+@admin.route('/blog/categories')
+@login_required
+def blog_categories():
+    all_categories = BlogCategory.query.order_by(BlogCategory.name)
+    return render_template('admin/blog/categories/categories.html', categories=all_categories)
+
+
+@admin.route('/blog/categories/category/<int:category_id>', methods=['GET', 'POST'])
+@login_required
+def edit_blog_category(category_id):
+    form = EditCategoryForm()
+    category = BlogCategory.query.filter_by(id=category_id).first()
+
+    if category is None:
+        abort(404)
+
+    if form.validate_on_submit():
+        category.name = form.name.data
+        category.description = form.description.data
+
+        db.session.add(category)
+        flash('"{0}" has been saved'.format(category.name))
+
+        return redirect(url_for('.blog_categories'))
+
+    form.name.data = category.name
+    form.description.data = category.description
+
+    return render_template('admin/blog/categories/edit_category.html', form=form, category=category)
+
+
+@admin.route('/blog/categories/new', methods=['GET', 'POST'])
+@login_required
+def add_blog_category():
+    form = EditCategoryForm()
+
+    if form.validate_on_submit():
+        category = BlogCategory()
+
+        category.name = form.name.data
+        category.description = form.description.data
+
+        db.session.add(category)
+        flash('"{0}" has been saved'.format(category.name))
+
+        return redirect(url_for('.blog_categories'))
+
+    return render_template('admin/blog/categories/edit_category.html', form=form, category=category)
+
+
+@admin.route('/blog/categories/delete/<int:category_id>', methods=['GET', 'POST'])
+@login_required
+def delete_blog_category(category_id):
+    category = BlogCategory.query.filter_by(id=category_id)
+
+    if category is not None:
+        db.session.delete(category)
+
+        flash('"{0}" has been deleted'.format(category.name))
+        return redirect(url_for('.blog_categories'))
+
+    flash('Category does not exist')
+    return redirect('.blog_categories')

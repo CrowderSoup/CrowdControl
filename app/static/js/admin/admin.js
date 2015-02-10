@@ -1,6 +1,6 @@
 define(function (require) {
     var path = location.pathname.replace('/admin', '').replace(/\d+/g, '').replace(/\/$/, '');
-    debugger;
+
     var vm = null;
     switch (path) {
         case "/pages":
@@ -12,13 +12,13 @@ define(function (require) {
         case "/pages/new":
             vm = require('pages/add_page');
             break;
-        case "/posts":
+        case "/blog/posts":
             vm = require('posts/index');
             break;
-        case "/posts/post":
+        case "/blog/posts/post":
             vm = require('posts/edit_post');
             break;
-        case "/posts/new":
+        case "/blog/posts/new":
             vm = require('posts/add_post');
             break;
         case "/menus":

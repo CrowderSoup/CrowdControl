@@ -2,7 +2,7 @@ from flask.ext.wtf import Form
 from wtforms import StringField, DateTimeField, BooleanField, SelectField, PasswordField, ValidationError, IntegerField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from ..wtform_widgets import MarkdownField
-from ..models import User, Role, Menu, MenuItem, Page, BlogPost
+from ..models import User, Role, Menu, MenuItem, Page, BlogPost, BlogCategory
 
 
 class EditMenuForm(Form):
@@ -53,6 +53,13 @@ class EditPostForm(Form):
     slug = StringField('Slug/Url', validators=[DataRequired(), Length(1, 256)])
     content = MarkdownField('Content')
     published_on = DateTimeField('Published On', validators=[DataRequired()])
+    category = SelectField('Category')
+
+    def __init__(self, *args, **kwargs):
+        super(EditPostForm, self).__init__(*args, **kwargs)
+
+        self.category.choices = [(category.id, category.name)
+                                for category in BlogCategory.query.order_by(BlogCategory.name)]
 
 
 class AddPostForm(Form):
@@ -60,6 +67,18 @@ class AddPostForm(Form):
     slug = StringField('Slug/Url', validators=[DataRequired(), Length(1, 256)])
     content = MarkdownField('Content')
     published_on = DateTimeField('Published On', validators=[DataRequired()])
+    category = SelectField('Category')
+
+    def __init__(self, *args, **kwargs):
+        super(AddPostForm, self).__init__(*args, **kwargs)
+
+        self.category.choices = [(category.id, category.name)
+                                for category in BlogCategory.query.order_by(BlogCategory.name)]
+
+
+class EditCategoryForm(Form):
+    name = StringField("Name", validators=[DataRequired(), Length(1, 64)])
+    description = StringField("Description", validators=[Length(1, 512)])
 
 
 class EditUserForm(Form):
