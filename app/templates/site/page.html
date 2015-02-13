@@ -4,6 +4,14 @@
 
 {% block page_content %}
 
-    {{ page.Content|safe }}
+    <div class="page-header">
+        <h1>{{ page.Title }}</h1>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ page.Content|safe }}
+        </div>
+    </div>
 
 {% endblock %}

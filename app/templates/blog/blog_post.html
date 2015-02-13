@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ super() }} &mdash; Blog{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1><a href="{{ url_for('blog.the_blog') }}">Blog</a> <small>Random thoughts and ramblings</small></h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="post-list">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h2>{{ blogPost.title }}</h2>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        {{ blogPost.content|safe }}
+                    </div>
+                    <div class="panel-footer">
+                        <p class="info">
+                            Posted on {{ blogPost.created_on|datetime }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

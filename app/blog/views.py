@@ -32,7 +32,7 @@ def the_blog(page):
         })
 
     # Let's return the page and menu items
-    return render_template("site/blog.html", menu=main_menu, blogPosts=blog_posts, posts=posts, categories=categories)
+    return render_template("blog/blog.html", menu=main_menu, blogPosts=blog_posts, posts=posts, categories=categories)
 
 
 @blog.route('/blog/post/<path:slug>')
@@ -60,4 +60,41 @@ def blog_post(slug):
         'content': rendered
     }
 
-    return render_template("site/blog_post.html", menu=mainMenu, blogPost=post)
+    return render_template("blog/blog_post.html", menu=mainMenu, blogPost=post)
+
+
+@blog.route('/blog/category/<path:slug>', defaults={'page': 1})
+@blog.route('/blog/category/<path:slug>/<int:page>')
+def blog_category(slug, page):
+    category = BlogCategory.query.filter_by(slug=slug).first()
+
+    if category is None:
+        abort(404)
+
+    # Get the menu we want to use for this page...
+    # TODO: make this more dynamic... probably tie it to the page
+    main_menu = Menu.query.filter_by(name="Main").first()
+
+    blog_posts = BlogPost.query.filter_by(blogcategory_id=category.id)\
+        .order_by(BlogPost.created_on.desc()).paginate(page, 5)
+    categories = BlogCategory.query.all()
+
+    # Markdown Parser and Renderer
+    parser = CommonMark.DocParser()
+    renderer = CommonMark.HTMLRenderer()
+
+    posts = []
+
+    for blogPost in blog_posts.items:
+        parsed = parser.parse(blogPost.content)
+        rendered = renderer.render(parsed)
+
+        posts.append({
+            'title': blogPost.title,
+            'slug': blogPost.slug,
+            'created_on': blogPost.created_on,
+            'content': rendered
+        })
+
+    # Let's return the page and menu items
+    return render_template("blog/blog.html", menu=main_menu, blogPosts=blog_posts, posts=posts, categories=categories)

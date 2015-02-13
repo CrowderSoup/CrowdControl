@@ -99,6 +99,7 @@ def edit_blog_category(category_id):
 
     if form.validate_on_submit():
         category.name = form.name.data
+        category.slug = form.slug.data
         category.description = form.description.data
 
         db.session.add(category)
@@ -107,6 +108,7 @@ def edit_blog_category(category_id):
         return redirect(url_for('.blog_categories'))
 
     form.name.data = category.name
+    form.slug.data = category.slug
     form.description.data = category.description
 
     return render_template('admin/blog/categories/edit_category.html', form=form, category=category)
@@ -121,20 +123,22 @@ def add_blog_category():
         category = BlogCategory()
 
         category.name = form.name.data
+        category.slug = form.slug.data
         category.description = form.description.data
+        category.created_on = datetime.utcnow()
 
         db.session.add(category)
         flash('"{0}" has been saved'.format(category.name))
 
         return redirect(url_for('.blog_categories'))
 
-    return render_template('admin/blog/categories/edit_category.html', form=form, category=category)
+    return render_template('admin/blog/categories/add_category.html', form=form)
 
 
 @admin.route('/blog/categories/delete/<int:category_id>', methods=['GET', 'POST'])
 @login_required
 def delete_blog_category(category_id):
-    category = BlogCategory.query.filter_by(id=category_id)
+    category = BlogCategory.query.filter_by(id=category_id).first()
 
     if category is not None:
         db.session.delete(category)

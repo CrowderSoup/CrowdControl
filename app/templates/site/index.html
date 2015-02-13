@@ -8,6 +8,10 @@
         <h1>{{ page.Title }}</h1>
     </div>
 
-    {{ page.Content|safe }}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ page.Content|safe }}
+        </div>
+    </div>
 
 {% endblock %}

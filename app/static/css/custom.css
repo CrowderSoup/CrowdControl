@@ -2,7 +2,8 @@ body {
   margin-top: 41px;
 }
 
-.post-list h3 {
+.post-list h3,
+.post-list h2 {
     margin: 0 0 0 0;
 }
 

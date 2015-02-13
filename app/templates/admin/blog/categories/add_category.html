@@ -17,6 +17,20 @@
             {% endif %}
         </div>
         <div class="form-group">
+            {{ form.slug.label(class="control-label") }}
+
+            {{ form.slug(class="form-control", style="display: none;") }}
+            <input type="text" class="form-control" data-bind="value: slug, enable: false" />
+
+            {% if form.slug.errors %}
+                <ul class="errors">
+                    {% for error in form.slug.errors %}
+                        <li class="small">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
             {{ form.description.label(class="control-label") }}
             {{ form.description(class="form-control") }}
             {% if form.description.errors %}
@@ -28,6 +42,9 @@
             {% endif %}
         </div>
         <div class="row text-right">
+            {{ form.csrf_token }}
+
+            <a href="{{ url_for(".blog_categories") }}" class="btn btn-link">Cancel</a>
             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
         </div>
     </form>

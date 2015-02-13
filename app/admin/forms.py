@@ -53,7 +53,7 @@ class EditPostForm(Form):
     slug = StringField('Slug/Url', validators=[DataRequired(), Length(1, 256)])
     content = MarkdownField('Content')
     published_on = DateTimeField('Published On', validators=[DataRequired()])
-    category = SelectField('Category')
+    category = SelectField('Category', coerce=int)
 
     def __init__(self, *args, **kwargs):
         super(EditPostForm, self).__init__(*args, **kwargs)
@@ -67,7 +67,7 @@ class AddPostForm(Form):
     slug = StringField('Slug/Url', validators=[DataRequired(), Length(1, 256)])
     content = MarkdownField('Content')
     published_on = DateTimeField('Published On', validators=[DataRequired()])
-    category = SelectField('Category')
+    category = SelectField('Category', coerce=int)
 
     def __init__(self, *args, **kwargs):
         super(AddPostForm, self).__init__(*args, **kwargs)
@@ -78,6 +78,7 @@ class AddPostForm(Form):
 
 class EditCategoryForm(Form):
     name = StringField("Name", validators=[DataRequired(), Length(1, 64)])
+    slug = StringField('Slug/Url', validators=[DataRequired(), Length(1, 256)])
     description = StringField("Description", validators=[Length(1, 512)])
 
 

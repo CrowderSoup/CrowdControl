@@ -21,6 +21,12 @@ define(function (require) {
         case "/blog/posts/new":
             vm = require('posts/add_post');
             break;
+        case "/blog/categories/category":
+            vm = require('posts/add_edit_category');
+            break;
+        case "/blog/categories/new":
+            vm = require('posts/add_edit_category');
+            break;
         case "/menus":
             vm = require('menus/menus');
             break;
