@@ -1,5 +1,5 @@
 from flask import render_template, abort
-from ..models import BlogPost, BlogCategory, Menu
+from ..models import BlogPost, BlogCategory, Menu, User
 from . import blog
 import CommonMark
 
@@ -24,11 +24,15 @@ def the_blog(page):
         parsed = parser.parse(blogPost.content)
         rendered = renderer.render(parsed)
 
+        # Get username for by-line
+        by = User.query.filter_by(id=blogPost.user_id).first().username or "Unknown"
+
         posts.append({
             'title': blogPost.title,
             'slug': blogPost.slug,
             'created_on': blogPost.created_on,
-            'content': rendered
+            'content': rendered,
+            'by': by
         })
 
     # Let's return the page and menu items
@@ -53,11 +57,15 @@ def blog_post(slug):
     parsed = parser.parse(blogPost.content)
     rendered = renderer.render(parsed)
 
+    # Get username for by-line
+    by = User.query.filter_by(id=blogPost.user_id).first().username or "Unknown"
+
     post = {
         'title': blogPost.title,
         'slug': blogPost.slug,
         'created_on': blogPost.created_on,
-        'content': rendered
+        'content': rendered,
+        'by': by
     }
 
     return render_template("blog/blog_post.html", menu=mainMenu, blogPost=post)
