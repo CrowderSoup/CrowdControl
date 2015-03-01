@@ -41,6 +41,15 @@ nosetests.xml
 # Virtual environment
 venv
 venv3
+env
 
 # PyCharm
 .idea/*
+
+# Visual Studio
+*.suo
+*.pyproj*
+obj
+ptvs_virtualenv_proxy.py
+web.config
+web.debug.config
