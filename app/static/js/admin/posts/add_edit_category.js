@@ -12,7 +12,6 @@ define(function () {
 
         self.activate = function () {
             // Set the initial value of the slug
-            debugger;
             self.slug($('#slug').val());
 
             // Attach to changes of the title
