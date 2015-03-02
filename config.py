@@ -12,7 +12,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     CROWDCONTROL_MAIL_SUBJECT_PREFIX = '[CrowdControl]'
     CROWDCONTROL_MAIL_SENDER = 'CrowdControl Admin <crowdcontrol@crowdersoup.com>'
-    CROWDCONTROLY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    CROWDCONTROL_ADMIN = os.environ.get('CROWDCONTROL_ADMIN')
 
     @staticmethod
     def init_app(app):
