@@ -46,4 +46,7 @@ def install():
 
 
 if __name__ == '__main__':
-    manager.run()
+    if os.environ.get('FLASK_CONFIG') == 'production':
+        app.run()
+    else:
+        manager.run()
