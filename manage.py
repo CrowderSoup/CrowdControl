@@ -46,7 +46,7 @@ def install():
 
 
 @manager.option('-h', '--host', dest='host', default='127.0.0.1')
-@manager.option('-p', '--port', dest='port', type=int, default=6969)
+@manager.option('-p', '--port', dest='port', type=int, default=8000)
 @manager.option('-w', '--workers', dest='workers', type=int, default=3)
 def gunicorn(host, port, workers):
     """Start the Server with Gunicorn"""
