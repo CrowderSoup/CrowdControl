@@ -30,7 +30,7 @@ def the_blog(page):
         posts.append({
             'title': blogPost.title,
             'slug': blogPost.slug,
-            'created_on': blogPost.created_on,
+            'published_on': blogPost.published_on,
             'content': rendered,
             'by': by
         })
@@ -63,7 +63,7 @@ def blog_post(slug):
     post = {
         'title': blogPost.title,
         'slug': blogPost.slug,
-        'created_on': blogPost.created_on,
+        'published_on': blogPost.published_on,
         'content': rendered,
         'by': by
     }
@@ -97,11 +97,15 @@ def blog_category(slug, page):
         parsed = parser.parse(blogPost.content)
         rendered = renderer.render(parsed)
 
+        # Get username for by-line
+        by = User.query.filter_by(id=blogPost.user_id).first().username or "Unknown"
+
         posts.append({
             'title': blogPost.title,
             'slug': blogPost.slug,
-            'created_on': blogPost.created_on,
-            'content': rendered
+            'published_on': blogPost.published_on,
+            'content': rendered,
+            'by': by
         })
 
     # Let's return the page and menu items
