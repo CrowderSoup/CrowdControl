@@ -31,24 +31,24 @@ def install_with_sample_content(email):
     menu.created_on = datetime.utcnow()
     db.session.add(menu)
 
-    homeMenuItem = MenuItem()
-    homeMenuItem.name = 'Home'
-    homeMenuItem.slug = '/'
-    homeMenuItem.created_on = datetime.utcnow()
-    homeMenuItem.menu = menu
-    db.session.add(homeMenuItem)
+    homemenuitem = MenuItem()
+    homemenuitem.name = 'Home'
+    homemenuitem.slug = '/'
+    homemenuitem.created_on = datetime.utcnow()
+    homemenuitem.menu = menu
+    db.session.add(homemenuitem)
 
-    aboutMenuItem = MenuItem()
-    aboutMenuItem.name = 'About'
-    aboutMenuItem.slug = '/about-me'
-    aboutMenuItem.created_on = datetime.utcnow()
-    aboutMenuItem.menu = menu
-    db.session.add(aboutMenuItem)
+    aboutmenuitem = MenuItem()
+    aboutmenuitem.name = 'About'
+    aboutmenuitem.slug = '/about-me'
+    aboutmenuitem.created_on = datetime.utcnow()
+    aboutmenuitem.menu = menu
+    db.session.add(aboutmenuitem)
 
     # Pages
-    homePage = Page()
-    homePage.title = 'Index'
-    homePage.content = """# Lorem ipsum
+    homepage = Page()
+    homepage.title = 'Index'
+    homepage.content = """# Lorem ipsum
     <div class="row">
         <div class="col-md-3">
             <div class="panel panel-default">
@@ -104,37 +104,37 @@ def install_with_sample_content(email):
         </div>
     </div>
     """
-    homePage.is_homepage = True
-    homePage.created_on = datetime.utcnow()
-    homePage.published_on = datetime.utcnow()
-    homePage.slug = 'index'
-    homePage.user = user
-    db.session.add(homePage)
+    homepage.is_homepage = True
+    homepage.created_on = datetime.utcnow()
+    homepage.published_on = datetime.utcnow()
+    homepage.slug = 'index'
+    homepage.user = user
+    db.session.add(homepage)
 
-    aboutPage = Page()
-    aboutPage.title = 'About Me'
-    aboutPage.slug = 'about-me'
-    aboutPage.content = """This is the about page. It's lots of fun! You can learn about me. For instance:
+    aboutpage = Page()
+    aboutpage.title = 'About Me'
+    aboutpage.slug = 'about-me'
+    aboutpage.content = """This is the about page. It's lots of fun! You can learn about me. For instance:
     - I love the internet
     - I'm typing this right now
     - This is our land (Yes it is!)
     """
-    aboutPage.created_on = datetime.utcnow()
-    aboutPage.published_on = datetime.utcnow()
-    aboutPage.user = user
-    aboutPage.is_homepage = True
-    db.session.add(aboutPage)
+    aboutpage.created_on = datetime.utcnow()
+    aboutpage.published_on = datetime.utcnow()
+    aboutpage.user = user
+    aboutpage.is_homepage = True
+    db.session.add(aboutpage)
 
     # Blog Stuff
-    blogCategory = BlogCategory()
-    blogCategory.name = "Uncategorized"
-    blogCategory.description = "All uncategorized posts"
-    blogCategory.created_on = datetime.utcnow()
-    db.session.add(blogCategory)
+    blogcategory = BlogCategory()
+    blogcategory.name = "Uncategorized"
+    blogcategory.description = "All uncategorized posts"
+    blogcategory.created_on = datetime.utcnow()
+    db.session.add(blogcategory)
 
-    blogPost = BlogPost()
-    blogPost.title = "Hello World!"
-    blogPost.content = """### This is my first post.
+    blogpost = BlogPost()
+    blogpost.title = "Hello World!"
+    blogpost.content = """### This is my first post.
     What do you think? I'm writing this with Markdown right now. Pretty neat, right? Markdown has several advantages
     over a standard WYSIWYG editor like WordPress and Blogger user.
 
@@ -147,12 +147,12 @@ def install_with_sample_content(email):
     Some people find that there is a bit of a learning curve with markdown. However, with an hour of patience you'll
     have it down pat. And from that point on it'll change your life.
     """
-    blogPost.slug = "hello-world"
-    blogPost.created_on = datetime.utcnow()
-    blogPost.published_on = datetime.utcnow()
-    blogPost.blogcategory = blogCategory
-    blogPost.user = user
-    db.session.add(blogPost)
+    blogpost.slug = "hello-world"
+    blogpost.created_on = datetime.utcnow()
+    blogpost.published_on = datetime.utcnow()
+    blogpost.blogcategory = blogcategory
+    blogpost.user = user
+    db.session.add(blogpost)
 
     db.session.commit()
 
