@@ -11,7 +11,7 @@ def the_blog(page):
     # TODO: make this more dynamic... probably tie it to the page
     main_menu = Menu.query.filter_by(name="Main").first()
 
-    blog_posts = BlogPost.query.order_by(BlogPost.created_on.desc()).paginate(page, 5)
+    blog_posts = BlogPost.query.order_by(BlogPost.published_on.desc()).paginate(page, 5)
     categories = BlogCategory.query.all()
 
     # Markdown Parser and Renderer
@@ -84,7 +84,7 @@ def blog_category(slug, page):
     main_menu = Menu.query.filter_by(name="Main").first()
 
     blog_posts = BlogPost.query.filter_by(blogcategory_id=category.id)\
-        .order_by(BlogPost.created_on.desc()).paginate(page, 5)
+        .order_by(BlogPost.published_on.desc()).paginate(page, 5)
     categories = BlogCategory.query.all()
 
     # Markdown Parser and Renderer
