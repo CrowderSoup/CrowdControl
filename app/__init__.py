@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.mail import Mail
@@ -18,29 +19,33 @@ login_manager.login_view = 'auth.login'
 
 
 def create_app(config_name):
-    app = Flask(__name__)
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
+    the_app = Flask(__name__)
+    the_app.config.from_object(config[config_name])
+    config[config_name].init_app(the_app)
 
-    bootstrap.init_app(app)
-    mail.init_app(app)
-    moment.init_app(app)
-    db.init_app(app)
-    login_manager.init_app(app)
+    bootstrap.init_app(the_app)
+    mail.init_app(the_app)
+    moment.init_app(the_app)
+    db.init_app(the_app)
+    login_manager.init_app(the_app)
 
-    app.jinja_env.filters['datetime'] = format_datetime
+    the_app.jinja_env.filters['datetime'] = format_datetime
 
-    from .site import site as site_blueprint
-    app.register_blueprint(site_blueprint)
+    from app.site import site as site_blueprint
+    the_app.register_blueprint(site_blueprint)
 
-    from .blog import blog as blog_blueprint
-    app.register_blueprint(blog_blueprint)
+    from app.blog import blog as blog_blueprint
+    the_app.register_blueprint(blog_blueprint)
 
-    from .admin import admin as admin_blueprint
-    app.register_blueprint(admin_blueprint, url_prefix="/admin")
+    from app.admin import admin as admin_blueprint
+    the_app.register_blueprint(admin_blueprint, url_prefix="/admin")
 
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint, url_prefix="/auth")
+    from app.auth import auth as auth_blueprint
+    the_app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
-    return app
+    return the_app
 
+
+if __name__ == "__main__":
+    app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+    app.run()
