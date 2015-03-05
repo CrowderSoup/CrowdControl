@@ -47,6 +47,7 @@ def create_app(config_name):
 
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+print(os.getenv('FLASK_CONFIG'))
 
 if __name__ == "__main__":
     app.run()
