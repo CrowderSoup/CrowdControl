@@ -116,9 +116,10 @@ def blog_category(slug, page):
 
 @blog.route('/blog/feed.atom')
 def blog_feed():
+    root_url = 'http://crowdersoup.com/blog'
     feed = AtomFeed('CrowderSoup.com Blog',
                     feed_url=request.url,
-                    url=request.url_root)
+                    url=root_url)
 
     # Markdown Parser and Renderer
     parser = CommonMark.DocParser()
@@ -135,7 +136,7 @@ def blog_feed():
         feed.add(post.title, rendered,
                  content_type='html',
                  author=by,
-                 url='{0}/blog/{1}'.format(request.url_root, post.slug),
+                 url='{0}/blog/{1}'.format(root_url, post.slug),
                  updated=post.published_on,
                  published=post.published_on)
 
