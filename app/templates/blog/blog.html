@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ super() }} &mdash; Blog{% endblock %}
+{% block title %}{{ super() }} &mdash; {{ 'Blog' if not category else category.name }}{% endblock %}
 
 {% block page_content %}
 
@@ -34,16 +34,16 @@
             </div>
             <nav>
                 <ul class="pager">
-                    <li class="previous {{ 'disabled' if not blogPosts.has_next else '' }}">
-                        {% if blogPosts.has_next %}
-                            <a href="{{ url_for('blog.the_blog', page=blogPosts.next_num) }}"><span aria-hidden="true">&larr;</span> Older</a>
+                    <li class="previous {{ 'disabled' if not blog_posts.has_next else '' }}">
+                        {% if blog_posts.has_next %}
+                            <a href="{{ url_for('blog.the_blog', page=blog_posts.next_num) }}"><span aria-hidden="true">&larr;</span> Older</a>
                         {% else %}
                             <a><span aria-hidden="true">&larr;</span> Older</a>
                         {% endif %}
                     </li>
-                    <li class="next {{ 'disabled' if not blogPosts.has_prev else '' }}">
-                        {% if blogPosts.has_prev %}
-                            <a href="{{ url_for('blog.the_blog', page=blogPosts.prev_num) }}">Newer <span aria-hidden="true">&rarr;</span></a>
+                    <li class="next {{ 'disabled' if not blog_posts.has_prev else '' }}">
+                        {% if blog_posts.has_prev %}
+                            <a href="{{ url_for('blog.the_blog', page=blog_posts.prev_num) }}">Newer <span aria-hidden="true">&rarr;</span></a>
                         {% else %}
                             <a>Newer <span aria-hidden="true">&rarr;</span></a>
                         {% endif %}

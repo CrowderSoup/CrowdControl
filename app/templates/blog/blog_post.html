@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ super() }} &mdash; Blog{% endblock %}
+{% block title %}{{ super() }} &mdash; {{ blog_post.title }}{% endblock %}
 
 {% block page_content %}
     <div class="page-header">
@@ -13,16 +13,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h2>{{ blogPost.title }}</h2>
+                            <h2>{{ blog_post.title }}</h2>
                         </div>
                     </div>
                     <div class="panel-body">
-                        {{ blogPost.content|safe }}
+                        {{ blog_post.content|safe }}
                     </div>
                     <div class="panel-footer">
                         <p class="info">
-                            Posted on {{ blogPost.published_on|datetime }},
-                            by {{ blogPost.by }}
+                            Posted on {{ blog_post.published_on|datetime }},
+                            by {{ blog_post.by }}
                         </p>
                     </div>
                 </div>
