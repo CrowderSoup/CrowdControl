@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, abort
 from flask.ext.login import login_required, current_user
 from . import admin
 from ..models import db, Page
-from .forms import EditPageForm, AddPageForm
+from .forms import PageForm
 
 @admin.route('/pages')
 @login_required
@@ -16,7 +16,7 @@ def pages():
 @admin.route('/pages/page/<page_id>', methods=['GET', 'POST'])
 @login_required
 def edit_page(page_id):
-    form = EditPageForm()
+    form = PageForm()
     page = Page.query.filter_by(id=page_id).first()
 
     if page is None:
@@ -28,6 +28,7 @@ def edit_page(page_id):
         page.content = form.content.data
         page.published_on = form.published_on.data
         page.is_homepage = form.is_homepage.data
+        page.menu_id = form.menu.data
 
         # Let's find out if there's another homepage right now. If so, let's unset that from the homepage
         if page.is_homepage:
@@ -56,6 +57,7 @@ def edit_page(page_id):
     form.content.data = page.content
     form.published_on.data = page.published_on
     form.is_homepage.data = page.is_homepage
+    form.menu.data = page.menu_id
 
     return render_template('admin/pages/edit_page.html', form=form, page=page)
 
@@ -63,7 +65,7 @@ def edit_page(page_id):
 @admin.route('/pages/new', methods=['GET', 'POST'])
 @login_required
 def add_page():
-    form = AddPageForm()
+    form = PageForm()
 
     if form.validate_on_submit():
         page = Page()
@@ -75,6 +77,7 @@ def add_page():
         page.user_id = current_user.id
         page.created_on = datetime.utcnow()
         page.is_homepage = form.is_homepage.data
+        page.menu_id = form.menu.data
 
         # Let's find out if there's another homepage right now. If so, let's unset that from the homepage
         if page.is_homepage:

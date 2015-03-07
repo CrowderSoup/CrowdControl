@@ -27,25 +27,24 @@ class EditMenuItemForm(Form):
                              for menu in Menu.query.order_by(Menu.name)]
 
         pageSlugs = [("/{0}".format(page.slug)) for page in Page.query.filter_by(is_homepage=False).order_by(Page.slug)]
-        blogSlugs = [("/blog/{0}".format(post.slug)) for post in BlogPost.query.order_by(BlogPost.slug)]
+        blogSlugs = [("/blog/post/{0}".format(post.slug)) for post in BlogPost.query.order_by(BlogPost.slug)]
         slugs = ["/"] + pageSlugs + ["/blog"] + blogSlugs
         self.slug.choices = [(slug, slug) for slug in slugs]
 
 
-class EditPageForm(Form):
+class PageForm(Form):
     title = StringField('Title', validators=[DataRequired(), Length(1, 128)])
     slug = StringField('Slug/Url', validators=[DataRequired(), Length(1, 256)])
     content = MarkdownField('Content')
     published_on = DateTimeField('Published On', validators=[DataRequired()])
     is_homepage = BooleanField('Is Homepage?')
+    menu = SelectField("Menu", coerce=int)
 
+    def __init__(self, *args, **kwargs):
+        super(PageForm, self).__init__(*args, **kwargs)
 
-class AddPageForm(Form):
-    title = StringField('Title', validators=[DataRequired(), Length(1, 128)])
-    slug = StringField('Slug/Url', validators=[DataRequired(), Length(1, 256)])
-    content = MarkdownField('Content')
-    published_on = DateTimeField('Published On', validators=[DataRequired()])
-    is_homepage = BooleanField('Is Homepage?')
+        self.menu.choices = [(menu.id, menu.name)
+                             for menu in Menu.query.order_by(Menu.name)]
 
 
 class EditPostForm(Form):
@@ -59,7 +58,7 @@ class EditPostForm(Form):
         super(EditPostForm, self).__init__(*args, **kwargs)
 
         self.category.choices = [(category.id, category.name)
-                                for category in BlogCategory.query.order_by(BlogCategory.name)]
+                                 for category in BlogCategory.query.order_by(BlogCategory.name)]
 
 
 class AddPostForm(Form):
@@ -73,7 +72,7 @@ class AddPostForm(Form):
         super(AddPostForm, self).__init__(*args, **kwargs)
 
         self.category.choices = [(category.id, category.name)
-                                for category in BlogCategory.query.order_by(BlogCategory.name)]
+                                 for category in BlogCategory.query.order_by(BlogCategory.name)]
 
 
 class EditCategoryForm(Form):
@@ -106,14 +105,14 @@ class EditUserForm(Form):
 
     def validate_email(self, field):
         if field.data != self.user.email and \
-            User.query.filter_by(email=field.data).first():
+                User.query.filter_by(email=field.data).first():
             # The email is already in use by another user
             raise ValidationError('Email has already been used by another user')
 
 
     def validate_username(self, field):
         if field.data != self.user.username and \
-            User.query.filter_by(username=field.data).first():
+                User.query.filter_by(username=field.data).first():
             # The username is already in use by another user
             raise ValidationError('Username has already been used by another user')
 

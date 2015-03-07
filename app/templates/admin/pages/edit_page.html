@@ -88,6 +88,17 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+                    {{ form.menu.label(class="control-label") }}
+                    {{ form.menu(class="form-control") }}
+                    {% if form.menu.errors %}
+                        <ul class="errors">
+                            {% for error in form.menu.errors %}
+                                <li class="small">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="form-group">
                     <label class="control-label`">
                         {{ form.is_homepage() }} Is Homepage?
                     </label>

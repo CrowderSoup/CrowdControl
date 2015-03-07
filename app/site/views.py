@@ -10,40 +10,43 @@ def page(slug):
     """ This is the main route of the site. It handles the index and all other 'static' pages. """
 
     # Some sensible defaults
-    page = { 'Title': "", 'Content': "" }
-    templatePath = "site/index.html"
+    the_page = {'Title': "", 'Content': ""}
+    template_path = "site/index.html"
 
-    # Get the menu we want to use for this page...
-    # TODO: make this more dynamic... probably tie it to the page
-    mainMenu = Menu.query.filter_by(name="Main").first()
+    # Init menu to a blank one
+    menu = Menu
 
     # Markdown Parser and Renderer
     parser = CommonMark.DocParser()
     renderer = CommonMark.HTMLRenderer()
 
     if slug == "":
-        homePage = Page.query.filter_by(is_homepage=True).first()
-        if homePage is not None:
-            parsed = parser.parse(homePage.content)
+        home_page = Page.query.filter_by(is_homepage=True).first()
+        if home_page is not None:
+            parsed = parser.parse(home_page.content)
             rendered = renderer.render(parsed)
 
-            page = {
-                'Title': homePage.title,
+            menu = home_page.menu
+
+            the_page = {
+                'Title': home_page.title,
                 'Content': rendered
             }
     else:
-        templatePath = "site/page.html"
-        currentPage = Page.query.filter_by(slug=slug).first()
-        if currentPage is None:
+        template_path = "site/page.html"
+        current_page = Page.query.filter_by(slug=slug).first()
+        if current_page is None:
             abort(404)
 
-        parsed = parser.parse(currentPage.content)
+        parsed = parser.parse(current_page.content)
         rendered = renderer.render(parsed)
 
-        page = {
-            'Title': currentPage.title,
+        menu = current_page.menu
+
+        the_page = {
+            'Title': current_page.title,
             'Content': rendered
         }
 
     # Let's return the page and menu items
-    return render_template(templatePath, page=page, menu=mainMenu)
+    return render_template(template_path, page=the_page, menu=menu)
