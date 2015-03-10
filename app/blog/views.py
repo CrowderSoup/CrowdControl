@@ -1,5 +1,5 @@
 from werkzeug.contrib.atom import AtomFeed
-from flask import render_template, abort, request
+from flask import render_template, abort
 from ..models import BlogPost, BlogCategory, Menu, User
 from . import blog
 import CommonMark

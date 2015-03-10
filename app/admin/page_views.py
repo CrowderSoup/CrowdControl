@@ -6,11 +6,13 @@ from . import admin
 from ..models import db, Page
 from .forms import PageForm
 
-@admin.route('/pages')
+
+@admin.route('/pages', defaults={'page': 1})
+@admin.route('/pages/<int:page>')
 @login_required
-def pages():
-    all_pages = Page.query.all()
-    return render_template('admin/pages/pages.html', pages=all_pages)
+def pages(page):
+    the_pages = Page.query.order_by(Page.is_homepage.desc()).order_by(Page.title).paginate(page, 5)
+    return render_template('admin/pages/pages.html', pages=the_pages)
 
 
 @admin.route('/pages/page/<page_id>', methods=['GET', 'POST'])
