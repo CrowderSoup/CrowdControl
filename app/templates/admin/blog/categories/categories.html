@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for category in categories %}
+            {% for category in categories.items %}
                 <tr>
                     <td>{{ category.name }}</td>
                     <td>{{ category.description }}</td>
@@ -38,5 +38,23 @@
             {% endfor %}
         </tbody>
     </table>
+    <nav>
+        <ul class="pager">
+            <li class="next {{ 'disabled' if not categories.has_prev else '' }}">
+                {% if categories.has_prev %}
+                    <a href="{{ url_for('.blog_categories', page=categories.prev_num) }}">Next <span aria-hidden="true">&rarr;</span></a>
+                {% else %}
+                    <a>Next <span aria-hidden="true">&rarr;</span></a>
+                {% endif %}
+            </li>
+            <li class="previous {{ 'disabled' if not categories.has_next else '' }}">
+                {% if categories.has_next %}
+                    <a href="{{ url_for('.blog_categories', page=categories.next_num) }}"><span aria-hidden="true">&larr;</span> Previous</a>
+                {% else %}
+                    <a><span aria-hidden="true">&larr;</span> Previous</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
 
 {% endblock %}

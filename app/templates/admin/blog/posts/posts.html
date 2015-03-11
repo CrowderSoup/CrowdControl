@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for post in posts %}
+            {% for post in posts.items %}
                 <tr>
                     <td>{{ post.title }}</td>
                     <td>{{ post.slug }}</td>
@@ -40,5 +40,23 @@
             {% endfor %}
         </tbody>
     </table>
+    <nav>
+        <ul class="pager">
+            <li class="next {{ 'disabled' if not posts.has_prev else '' }}">
+                {% if posts.has_prev %}
+                    <a href="{{ url_for('.blog_posts', page=posts.prev_num) }}">Next <span aria-hidden="true">&rarr;</span></a>
+                {% else %}
+                    <a>Next <span aria-hidden="true">&rarr;</span></a>
+                {% endif %}
+            </li>
+            <li class="previous {{ 'disabled' if not posts.has_next else '' }}">
+                {% if posts.has_next %}
+                    <a href="{{ url_for('.blog_posts', page=posts.next_num) }}"><span aria-hidden="true">&larr;</span> Previous</a>
+                {% else %}
+                    <a><span aria-hidden="true">&larr;</span> Previous</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
 
 {% endblock %}

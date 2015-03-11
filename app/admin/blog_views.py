@@ -5,11 +5,12 @@ from . import admin
 from ..models import db, BlogPost, BlogCategory
 from .forms import EditPostForm, AddPostForm, EditCategoryForm
 
-@admin.route('/blog/posts')
+@admin.route('/blog/posts', defaults={'page': 1})
+@admin.route('/blog/posts/<int:page>')
 @login_required
-def blog_posts():
-    all_posts = BlogPost.query.order_by(BlogPost.published_on)
-    return render_template('admin/blog/posts/posts.html', posts=all_posts)
+def blog_posts(page):
+    the_posts = BlogPost.query.order_by(BlogPost.published_on.desc()).paginate(page, 5)
+    return render_template('admin/blog/posts/posts.html', posts=the_posts)
 
 
 @admin.route('/blog/posts/post/<post_id>', methods=['GET', 'POST'])
@@ -81,11 +82,12 @@ def delete_blog_post(post_id):
     return redirect(url_for('.blog_posts'))
 
 
-@admin.route('/blog/categories')
+@admin.route('/blog/categories', defaults={'page': 1})
+@admin.route('/blog/categories/<int:page>')
 @login_required
-def blog_categories():
-    all_categories = BlogCategory.query.order_by(BlogCategory.name)
-    return render_template('admin/blog/categories/categories.html', categories=all_categories)
+def blog_categories(page):
+    the_categories = BlogCategory.query.order_by(BlogCategory.name).paginate(page, 5)
+    return render_template('admin/blog/categories/categories.html', categories=the_categories)
 
 
 @admin.route('/blog/categories/category/<int:category_id>', methods=['GET', 'POST'])
