@@ -84,6 +84,10 @@ body {
   margin-top: 0;
 }
 
+.page-header h1 {
+    margin: 0 0 0 0;
+}
+
 
 /*
  * Placeholder dashboard ideas

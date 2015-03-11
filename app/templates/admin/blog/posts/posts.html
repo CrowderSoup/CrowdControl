@@ -4,12 +4,24 @@
 
 {% block page_content %}
 
-    <h1 class="page-header">
-        Blog Posts
-        <a href="{{ url_for('.add_blog_post') }}" class="btn btn-primary pull-right">
-            <i class="fa fa-plus"></i>Add
-        </a>
-    </h1>
+    <div class="row page-header">
+        <div class="col-md-8">
+            <h1>Blog Posts</h1>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search..." />
+                <span class="input-group-btn">
+                    <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <a href="{{ url_for('.add_blog_post') }}" class="btn btn-primary pull-right">
+                <i class="fa fa-plus"></i>Add
+            </a>
+        </div>
+    </div>
 
     <table class="table table-bordered table-stripped">
         <thead>
