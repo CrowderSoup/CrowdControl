@@ -1,20 +1,23 @@
 define(function () {
-  var vm = function () {
-    var self = this;
+    var vm = function () {
+        var self = this;
 
-    // Observables
+        // Observables
 
-    // Functions
-    self.canActivate = function () {
-      return true;
+        // Functions
+        self.search = function(){
+            window.location.href = '/admin/pages/search/' + encodeURIComponent($('#search').val());
+        };
+
+        self.canActivate = function () {
+            return true;
+        };
+
+        self.activate = function () {
+        };
+
+        return self;
     };
 
-    self.activate = function () {
-
-    };
-
-    return self;
-  };
-
-  return vm;
+    return vm;
 });

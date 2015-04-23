@@ -81,6 +81,10 @@ class EditCategoryForm(Form):
     description = StringField("Description", validators=[Length(1, 512)])
 
 
+class SearchForm(Form):
+    search = StringField("Search", validators=[DataRequired()])
+
+
 class EditUserForm(Form):
     email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
 

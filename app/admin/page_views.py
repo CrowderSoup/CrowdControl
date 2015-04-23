@@ -117,3 +117,12 @@ def delete_page(page_id):
 
     flash('Page does not exist')
     return redirect(url_for('.pages'))
+
+
+@admin.route('/pages/search/<string:search>', defaults={'page': 1})
+@admin.route('/pages/search/<string:search>/<int:page>')
+@login_required
+def pages_search(search, page):
+    the_pages = Page.query.filter_by(title=search).paginate(page, 5)
+
+    return render_template('admin/pages/search.html', pages=the_pages)
