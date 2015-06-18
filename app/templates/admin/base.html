@@ -88,6 +88,24 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 
-    <!-- Start the app -->
-    <script data-main="/static/js/admin/admin" type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
+
+    {% if js %}
+        <!-- Start the app -->
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
+        <script type="text/javascript">
+            require(['/static/js/admin/{{ js }}.js'], function(vm){
+                if (_.isFunction(vm)) {
+                    vm = new vm();
+                } else {
+                    toastr.error("Unable to load page. Please refresh and try again.");
+                }
+
+                if (vm !== null && vm.canActivate()) {
+                    vm.activate();
+                }
+
+                ko.applyBindings(vm);
+            });
+        </script>
+    {% endif %}
 {% endblock %}

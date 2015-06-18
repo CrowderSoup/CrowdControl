@@ -9,7 +9,7 @@ from .forms import EditMenuForm, EditMenuItemForm
 @login_required
 def menus():
     all_menus = Menu.query.all()
-    return render_template('admin/menus/menus.html', menus=all_menus)
+    return render_template('admin/menus/menus.html', js='menus/menus', menus=all_menus)
 
 
 @admin.route('/menus/menu/<int:menu_id>', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def menu(menu_id):
 
     menu_items = menu.menu_items.order_by(MenuItem.weight)
 
-    return render_template('admin/menus/menu.html', form=form, menu=menu, menu_items=menu_items)
+    return render_template('admin/menus/menu.html', js='menus/menu', form=form, menu=menu, menu_items=menu_items)
 
 
 @admin.route('/menus/menu/new', methods=['GET', 'POST'])
@@ -52,7 +52,7 @@ def add_menu():
 
         return redirect(url_for('.menus'))
 
-    return render_template("admin/menus/new.html", form=form)
+    return render_template("admin/menus/new.html", js='menus/new', form=form)
 
 
 @admin.route('/menus/menu/delete/<int:menu_id>')
@@ -102,7 +102,7 @@ def menu_item(menu_id, item_id):
     form.menu.data = menu_item.menu_id
     form.weight.data = menu_item.weight
 
-    return render_template("admin/menus/menu-item/menu-item.html", form=form, menu_item=menu_item)
+    return render_template("admin/menus/menu-item/menu-item.html", js='menus/menu-item/menu-item', form=form, menu_item=menu_item)
 
 
 @admin.route("/menus/menu/<int:menu_id>/menu-item/new", methods=['GET', 'POST'])
@@ -132,7 +132,7 @@ def add_menu_item(menu_id):
 
     form.menu.data = menu_id
 
-    return render_template("admin/menus/menu-item/new.html", form=form, menu=menu)
+    return render_template("admin/menus/menu-item/new.html", js='menus/menu-item/new', form=form, menu=menu)
 
 
 @admin.route("/menus/menu/<int:menu_id>/menu-item/delete/<int:item_id>")

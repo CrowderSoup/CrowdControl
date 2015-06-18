@@ -10,7 +10,7 @@ from .forms import EditPostForm, AddPostForm, EditCategoryForm
 @login_required
 def blog_posts(page):
     the_posts = BlogPost.query.order_by(BlogPost.published_on.desc()).paginate(page, 5)
-    return render_template('admin/blog/posts/posts.html', posts=the_posts)
+    return render_template('admin/blog/posts/posts.html', js='posts/index', posts=the_posts)
 
 
 @admin.route('/blog/posts/post/<post_id>', methods=['GET', 'POST'])
@@ -40,7 +40,7 @@ def edit_blog_post(post_id):
     form.published_on.data = post.published_on
     form.category.data = post.blogcategory_id
 
-    return render_template('admin/blog/posts/edit_post.html', form=form, post=post)
+    return render_template('admin/blog/posts/edit_post.html', js='posts/edit_post', form=form, post=post)
 
 
 @admin.route('/blog/posts/new', methods=['GET', 'POST'])
@@ -64,7 +64,7 @@ def add_blog_post():
 
         return redirect(url_for('.blog_posts'))
 
-    return render_template('admin/blog/posts/add_post.html', form=form)
+    return render_template('admin/blog/posts/add_post.html', js='posts/add_post', form=form)
 
 
 @admin.route('/blog/posts/delete/<post_id>', methods=['GET', 'POST'])
@@ -113,7 +113,7 @@ def edit_blog_category(category_id):
     form.slug.data = category.slug
     form.description.data = category.description
 
-    return render_template('admin/blog/categories/edit_category.html', form=form, category=category)
+    return render_template('admin/blog/categories/edit_category.html', js='posts/add_edit_category', form=form, category=category)
 
 
 @admin.route('/blog/categories/new', methods=['GET', 'POST'])
@@ -134,7 +134,7 @@ def add_blog_category():
 
         return redirect(url_for('.blog_categories'))
 
-    return render_template('admin/blog/categories/add_category.html', form=form)
+    return render_template('admin/blog/categories/add_category.html', js='posts/add_edit_category', form=form)
 
 
 @admin.route('/blog/categories/delete/<int:category_id>', methods=['GET', 'POST'])

@@ -12,7 +12,7 @@ from .forms import PageForm
 @login_required
 def pages(page):
     the_pages = Page.query.order_by(Page.is_homepage.desc()).order_by(Page.title).paginate(page, 5)
-    return render_template('admin/pages/pages.html', pages=the_pages)
+    return render_template('admin/pages/pages.html', js='pages/index', pages=the_pages)
 
 
 @admin.route('/pages/page/<page_id>', methods=['GET', 'POST'])
@@ -61,7 +61,7 @@ def edit_page(page_id):
     form.is_homepage.data = page.is_homepage
     form.menu.data = page.menu_id
 
-    return render_template('admin/pages/edit_page.html', form=form, page=page)
+    return render_template('admin/pages/edit_page.html', js='pages/edit_page', form=form, page=page)
 
 
 @admin.route('/pages/new', methods=['GET', 'POST'])
@@ -101,7 +101,7 @@ def add_page():
 
         return redirect(url_for('.pages'))
 
-    return render_template('admin/pages/add_page.html', form=form)
+    return render_template('admin/pages/add_page.html', js='pages/add_page', form=form)
 
 
 @admin.route('/pages/delete/<page_id>', methods=['GET', 'POST'])
