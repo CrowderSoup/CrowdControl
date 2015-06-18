@@ -1,5 +1,6 @@
 'build_app':
   script:
+  - python --version
   - virtualenv venv
   - source venv/bin/activate
   - pip install -r requirements.txt
