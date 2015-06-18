@@ -1,0 +1,8 @@
+'build_app':
+  script:
+  - python manage.py db upgrade
+  - python manage.py install
+  - python manage.py test
+  tags:
+  except:
+  - tags
