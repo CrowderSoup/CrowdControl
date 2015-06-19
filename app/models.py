@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
-from . import db, login_manager
+from app import db
 
 
 class Role(db.Model):
@@ -146,7 +146,3 @@ class PhotoGalleryItem(db.Model):
     def __repr__(self):
         return '<PhotoGalleryItem {!r}'.format(self.title)
 
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))

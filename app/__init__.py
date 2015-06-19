@@ -14,9 +14,6 @@ moment = Moment()
 db = SQLAlchemy()
 
 login_manager = LoginManager()
-login_manager.session_protection = 'strong'
-login_manager.login_view = 'auth.login'
-
 
 def create_app(config_name):
     the_app = Flask(__name__)
@@ -27,6 +24,11 @@ def create_app(config_name):
     mail.init_app(the_app)
     moment.init_app(the_app)
     db.init_app(the_app)
+
+    # Let's set up our login handlers
+    import app.login_handlers
+    login_manager.session_protection = 'strong'
+    login_manager.login_view = 'auth.login'
     login_manager.init_app(the_app)
 
     the_app.jinja_env.filters['datetime'] = format_datetime

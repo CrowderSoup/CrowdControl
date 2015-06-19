@@ -38,6 +38,9 @@ def install_with_sample_content(email):
     homemenuitem.menu = menu
     db.session.add(homemenuitem)
 
+    # Committing the session so that we ge a menu id
+    db.session.commit()
+
     aboutmenuitem = MenuItem()
     aboutmenuitem.name = 'About'
     aboutmenuitem.slug = '/about-me'
@@ -109,6 +112,7 @@ def install_with_sample_content(email):
     homepage.published_on = datetime.utcnow()
     homepage.slug = 'index'
     homepage.user = user
+    homepage.menu = menu
     db.session.add(homepage)
 
     aboutpage = Page()
@@ -119,10 +123,11 @@ def install_with_sample_content(email):
     - I'm typing this right now
     - This is our land (Yes it is!)
     """
+    aboutpage.is_homepage = False
     aboutpage.created_on = datetime.utcnow()
     aboutpage.published_on = datetime.utcnow()
     aboutpage.user = user
-    aboutpage.is_homepage = True
+    aboutpage.menu = menu
     db.session.add(aboutpage)
 
     # Blog Stuff
