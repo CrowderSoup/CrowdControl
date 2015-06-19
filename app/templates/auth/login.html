@@ -15,7 +15,38 @@
                             </h1>
                         </div>
                         <div class="panel-body">
-                            {{ wtf.quick_form(form) }}
+                            <form role="form" id="category-form" method="POST" action="{{ url_for('.login') }}">
+                                <div class="form-group">
+                                    {{ form.email.label(class="control-label") }}
+                                    {{ form.email(class="form-control") }}
+                                    {% if form.email.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.email.errors %}
+                                                <li class="small">{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.password.label(class="control-label") }}
+                                    {{ form.password(class="form-control") }}
+                                    {% if form.password.errors %}
+                                        <ul class="errors">
+                                            {% for error in form.password.errors %}
+                                                <li class="small">{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        {{ form.remember_me() }}
+                                        {{ form.remember_me.label() }}
+                                    </label>
+                                </div>
+                                {{ form.csrf_token }}
+                                <button type="submit" class="btn btn-default">Log In</button>
+                            </form>
                         </div>
                     </div>
                 </div>
