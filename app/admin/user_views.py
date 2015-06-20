@@ -27,7 +27,7 @@ def edit_user(user_id):
         user.username = form.username.data
         user.role_id = form.role.data
 
-        if not form.password.data:
+        if form.password.data != "":
             user.password = form.password.data
 
         db.session.add(user)

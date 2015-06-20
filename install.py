@@ -52,60 +52,60 @@ def install_with_sample_content(email):
     homepage = Page()
     homepage.title = 'Index'
     homepage.content = """# Lorem ipsum
-    <div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title">Lorem ipsum</div>
-                </div>
-                <div class="panel-body">
-                    Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
-                    voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
-                    nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
-                    legendos ex.
-                </div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Lorem ipsum</div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title">Lorem ipsum</div>
-                </div>
-                <div class="panel-body">
-                    Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
-                    voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
-                    nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
-                    legendos ex.
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title">Lorem ipsum</div>
-                </div>
-                <div class="panel-body">
-                    Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
-                    voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
-                    nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
-                    legendos ex.
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title">Lorem ipsum</div>
-                </div>
-                <div class="panel-body">
-                    Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
-                    voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
-                    nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
-                    legendos ex.
-                </div>
+            <div class="panel-body">
+                Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
+                voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
+                nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
+                legendos ex.
             </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Lorem ipsum</div>
+            </div>
+            <div class="panel-body">
+                Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
+                voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
+                nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
+                legendos ex.
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Lorem ipsum</div>
+            </div>
+            <div class="panel-body">
+                Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
+                voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
+                nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
+                legendos ex.
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Lorem ipsum</div>
+            </div>
+            <div class="panel-body">
+                Lorem ipsum dolor sit amet, eu sea nostrum reprimique, stet novum omnium et nam. Est ferri
+                voluptatibus eu. Ne nam augue iriure molestie, eos id fierent sensibus suscipiantur, ad eam
+                nonumes vocibus. Tota elaboraret at nec. Eos vide solet no, ex tale feugait eos. Est agam
+                legendos ex.
+            </div>
+        </div>
+    </div>
+</div>
     """
     homepage.is_homepage = True
     homepage.created_on = datetime.utcnow()
