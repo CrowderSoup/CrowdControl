@@ -2,8 +2,10 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash, abort
 from flask.ext.login import login_required, current_user
 from . import admin
-from ..models import db, User, Role
-from .forms import EditUserForm, AddUserForm
+from app import db
+from app.models.User import User
+from app.models.Role import Role
+from app.admin.forms import EditUserForm, AddUserForm
 
 @admin.route('/users')
 @login_required

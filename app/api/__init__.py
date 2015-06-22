@@ -1,5 +1,12 @@
 from app import db
-from app.models import User, Role, Page, BlogPost, BlogCategory, PhotoGallery, PhotoGalleryItems
+from app.models.User import User
+from app.models.Role import Role
+from app.models.Page import Page
+from app.models.BlogPost import BlogPost
+from app.models.BlogCategory import BlogCategory
+from app.models.BlogPostStatus import BlogPostStatus
+from app.models.PhotoGallery import PhotoGallery
+from app.models.PhotoGalleryItem import PhotoGalleryItem
 from flask.ext.login import current_user
 from flask.ext.restless import APIManager, ProcessingException
 
@@ -43,11 +50,15 @@ def build_api(app):
                            preprocessors=dict(
                                GET_SINGLE=[check_auth]
                            ))
+    api_manager.create_api(BlogPostStatus, methods=['GET', 'POST', 'DELETE'],
+                           preprocessors=dict(
+                               GET_SINGLE=[check_auth]
+                           ))
     api_manager.create_api(PhotoGallery, methods=['GET', 'POST', 'DELETE'],
                            preprocessors=dict(
                                GET_SINGLE=[check_auth]
                            ))
-    api_manager.create_api(PhotoGalleryItems, methods=['GET', 'POST', 'DELETE'],
+    api_manager.create_api(PhotoGalleryItem, methods=['GET', 'POST', 'DELETE'],
                            preprocessors=dict(
                                GET_SINGLE=[check_auth]
                            ))

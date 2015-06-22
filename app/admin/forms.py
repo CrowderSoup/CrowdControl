@@ -1,8 +1,14 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, DateTimeField, BooleanField, SelectField, PasswordField, ValidationError, IntegerField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
-from ..wtform_widgets import MarkdownField
-from ..models import User, Role, Menu, MenuItem, Page, BlogPost, BlogCategory
+from app.wtform_widgets import MarkdownField
+from app.models.User import User
+from app.models.Role import Role
+from app.models.Menu import Menu
+from app.models.MenuItem import MenuItem
+from app.models.Page import Page
+from app.models.BlogPost import BlogPost
+from app.models.BlogCategory import BlogCategory
 
 
 class EditMenuForm(Form):

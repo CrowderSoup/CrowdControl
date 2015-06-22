@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import User, Role, Menu, MenuItem, Page, BlogPost, BlogCategory, PhotoGallery, PhotoGalleryItem
+from app.models import User, Role, Menu, MenuItem, Page, BlogPost, BlogPostStatus, BlogCategory, \
+    PhotoGallery, PhotoGalleryItem
 from flask.ext.script import Manager, Shell
 from flask.ext.migrate import Migrate, MigrateCommand
 from install import install_with_sample_content
@@ -21,6 +22,7 @@ def make_shell_context():
         MenuItem=MenuItem,
         Page=Page,
         BlogPost=BlogPost,
+        BlogPostStatus=BlogPostStatus,
         BlogCategory=BlogCategory,
         PhotoGallery=PhotoGallery,
         PhotoGalleryItem=PhotoGalleryItem

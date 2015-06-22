@@ -1,6 +1,10 @@
 from werkzeug.contrib.atom import AtomFeed
 from flask import render_template, abort
-from ..models import BlogPost, BlogCategory, Menu, User
+from app.models.BlogPost import BlogPost
+from app.models.BlogCategory import BlogCategory
+from app.models.BlogPostStatus import BlogPostStatus
+from app.models.Menu import Menu
+from app.models.User import User
 from . import blog
 import CommonMark
 

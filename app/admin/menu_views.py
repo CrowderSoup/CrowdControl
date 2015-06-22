@@ -2,8 +2,10 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash, abort
 from flask.ext.login import login_required
 from . import admin
-from ..models import db, Menu, MenuItem
-from .forms import EditMenuForm, EditMenuItemForm
+from app import db
+from app.models.Menu import Menu
+from app.models.MenuItem import MenuItem
+from app.admin.forms import EditMenuForm, EditMenuItemForm
 
 @admin.route('/menus')
 @login_required

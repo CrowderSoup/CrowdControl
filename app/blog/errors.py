@@ -1,5 +1,5 @@
 from flask import render_template
-from ..models import Menu
+from app.models.Menu import Menu
 from . import blog
 
 

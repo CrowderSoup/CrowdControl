@@ -3,7 +3,8 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash, abort
 from flask.ext.login import login_required, current_user
 from . import admin
-from ..models import db, Page
+from app import db
+from app.models.Page import Page
 from .forms import PageForm
 
 

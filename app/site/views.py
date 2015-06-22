@@ -1,5 +1,6 @@
 from flask import render_template, abort
-from ..models import Page, Menu
+from app.models.Page import Page
+from app.models.Menu import Menu
 from . import site
 import CommonMark
 

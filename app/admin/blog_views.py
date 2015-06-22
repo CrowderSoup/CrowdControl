@@ -2,8 +2,11 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash, abort
 from flask.ext.login import login_required, current_user
 from . import admin
-from ..models import db, BlogPost, BlogCategory
-from .forms import EditPostForm, AddPostForm, EditCategoryForm
+from app import db
+from app.models.BlogPost import BlogPost
+from app.models.BlogCategory import BlogCategory
+from app.admin.forms import EditPostForm, AddPostForm, EditCategoryForm
+
 
 @admin.route('/blog/posts', defaults={'page': 1})
 @admin.route('/blog/posts/<int:page>')
@@ -113,7 +116,8 @@ def edit_blog_category(category_id):
     form.slug.data = category.slug
     form.description.data = category.description
 
-    return render_template('admin/blog/categories/edit_category.html', js='posts/add_edit_category', form=form, category=category)
+    return render_template('admin/blog/categories/edit_category.html', js='posts/add_edit_category', form=form,
+                           category=category)
 
 
 @admin.route('/blog/categories/new', methods=['GET', 'POST'])

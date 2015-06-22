@@ -2,10 +2,10 @@ import os
 from flask import render_template
 from flask.ext.login import login_required
 from . import admin
-from . import page_views
-from . import blog_views
-from . import user_views
-from . import  menu_views
+import app.admin.page_views
+import app.admin.blog_views
+import app.admin.user_views
+import  app.admin.menu_views
 
 @admin.route('/')
 @login_required

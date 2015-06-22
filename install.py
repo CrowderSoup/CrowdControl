@@ -1,6 +1,13 @@
 from datetime import datetime
 from app import db
-from app.models import User, Role, Menu, MenuItem, Page, BlogPost, BlogCategory, PhotoGallery, PhotoGalleryItem
+from app.models.User import User
+from app.models.Role import Role
+from app.models.Menu import Menu
+from app.models.MenuItem import MenuItem
+from app.models.Page import Page
+from app.models.BlogPost import BlogPost
+from app.models.BlogCategory import BlogCategory
+
 
 
 def install_with_sample_content(email):
