@@ -15,7 +15,7 @@ MarkupSafe
 SQLAlchemy
 WTForms
 Werkzeug
-sqlalchemy-migrate
+alembic
 blinker
 itsdangerous
 CommonMark
