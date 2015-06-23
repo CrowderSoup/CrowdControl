@@ -32,6 +32,7 @@ def edit_blog_post(post_id):
         post.content = form.content.data
         post.published_on = form.published_on.data
         post.blogcategory_id = form.category.data
+        post.blogpoststatus_id = form.status.data
 
         db.session.add(post)
         flash('"{0}" has been saved'.format(post.title))
@@ -43,6 +44,7 @@ def edit_blog_post(post_id):
     form.content.data = post.content
     form.published_on.data = post.published_on
     form.category.data = post.blogcategory_id
+    form.status.data = post.blogpoststatus_id
 
     return render_template('admin/blog/posts/edit_post.html', js='posts/edit_post', form=form, post=post)
 
@@ -62,6 +64,7 @@ def add_blog_post():
         post.user_id = current_user.id
         post.created_on = datetime.utcnow()
         post.blogcategory_id = form.category.data
+        post.blogpoststatus_id = form.status.data
 
         db.session.add(post)
         flash('"{0}" has been saved'.format(post.title))

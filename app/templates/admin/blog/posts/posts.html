@@ -24,6 +24,7 @@
             <th>Slug</th>
             <th>Created By</th>
             <th>Created On</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -34,6 +35,7 @@
                 <td>{{ post.slug }}</td>
                 <td>{{ post.user.username }}</td>
                 <td>{{ post.created_on|datetime }}</td>
+                <td>{{ post.blogpoststatus.name }}</td>
                 <td>
                     <a href="{{ url_for('.edit_blog_post', post_id=post.id) }}" class="btn btn-primary">
                         <i class="fa fa-edit"></i>Edit
