@@ -5,7 +5,9 @@ from . import admin
 from app import db
 from app.models.Menu import Menu
 from app.models.MenuItem import MenuItem
-from app.admin.forms import EditMenuForm, EditMenuItemForm
+from app.admin.forms.EditMenuForm import EditMenuForm
+from app.admin.forms.EditMenuItemForm import EditMenuItemForm
+
 
 @admin.route('/menus')
 @login_required
@@ -17,25 +19,25 @@ def menus():
 @admin.route('/menus/menu/<int:menu_id>', methods=['GET', 'POST'])
 @login_required
 def menu(menu_id):
-    menu = Menu.query.filter_by(id=menu_id).first()
+    the_menu = Menu.query.filter_by(id=menu_id).first()
     form = EditMenuForm()
 
-    if menu is None:
+    if the_menu is None:
         abort(404)
 
     if form.validate_on_submit():
-        menu.name = form.name.data
+        the_menu.name = form.name.data
 
         db.session.add(menu)
-        flash("{0} has been saved".format(menu.name))
+        flash("{0} has been saved".format(the_menu.name))
 
         return redirect(url_for('.menus'))
 
-    form.name.data = menu.name
+    form.name.data = the_menu.name
 
-    menu_items = menu.menu_items.order_by(MenuItem.weight)
+    menu_items = the_menu.menu_items.order_by(MenuItem.weight)
 
-    return render_template('admin/menus/menu.html', js='menus/menu', form=form, menu=menu, menu_items=menu_items)
+    return render_template('admin/menus/menu.html', js='menus/menu', form=form, menu=the_menu, menu_items=menu_items)
 
 
 @admin.route('/menus/menu/new', methods=['GET', 'POST'])
@@ -44,13 +46,13 @@ def add_menu():
     form = EditMenuForm()
 
     if form.validate_on_submit():
-        menu = Menu()
+        the_menu = Menu()
 
-        menu.name = form.name.data
-        menu.created_on = datetime.utcnow()
+        the_menu.name = form.name.data
+        the_menu.created_on = datetime.utcnow()
 
-        db.session.add(menu)
-        flash("{0} has been created".format(menu.name))
+        db.session.add(the_menu)
+        flash("{0} has been created".format(the_menu.name))
 
         return redirect(url_for('.menus'))
 
@@ -60,14 +62,14 @@ def add_menu():
 @admin.route('/menus/menu/delete/<int:menu_id>')
 @login_required
 def delete_menu(menu_id):
-    menu = Menu.query.filter_by(id=menu_id).first()
+    the_menu = Menu.query.filter_by(id=menu_id).first()
 
-    if menu is not None:
+    if the_menu is not None:
         # Delete all menu items within this menu
-        for menu_item in menu.menu_items.all():
-            db.session.delete(menu_item)
+        for item in the_menu.menu_items.all():
+            db.session.delete(item)
 
-        db.session.delete(menu)
+        db.session.delete(the_menu)
 
         flash("{0} has been deleted".format(menu.name))
         return redirect(url_for(".menus"))
@@ -79,73 +81,74 @@ def delete_menu(menu_id):
 @admin.route('/menus/menu/<int:menu_id>/menu-item/<int:item_id>', methods=['GET', 'POST'])
 @login_required
 def menu_item(menu_id, item_id):
-    menu_item = MenuItem.query.filter_by(menu_id=menu_id, id=item_id).first()
+    the_menu_item = MenuItem.query.filter_by(menu_id=menu_id, id=item_id).first()
     form = EditMenuItemForm()
 
     if form.validate_on_submit():
-        menu_item.name = form.name.data
-        menu_item.slug = form.slug.data
-        menu_item.menu_id = form.menu.data
-        menu_item.weight = form.weight.data
+        the_menu_item.name = form.name.data
+        the_menu_item.slug = form.slug.data
+        the_menu_item.menu_id = form.menu.data
+        the_menu_item.weight = form.weight.data
 
         items = MenuItem.query.filter_by(menu_id=menu_id, name=menu_item.name).all()
         for item in items:
             if item.id != menu_item.id:
                 flash("Menu Item can't use the same name as another item in the same menu")
-                return render_template("admin/menus/menu-item/menu-item.html", form=form, menu_item=menu_item)
+                return render_template("admin/menus/menu-item/menu-item.html", form=form, menu_item=the_menu_item)
 
-        db.session.add(menu_item)
-        flash("{0} has been saved".format(menu_item.name))
+        db.session.add(the_menu_item)
+        flash("{0} has been saved".format(the_menu_item.name))
 
-        return redirect(url_for(".menu", menu_id=menu_item.menu_id))
+        return redirect(url_for(".menu", menu_id=the_menu_item.menu_id))
 
-    form.name.data = menu_item.name
-    form.slug.data = menu_item.slug
-    form.menu.data = menu_item.menu_id
-    form.weight.data = menu_item.weight
+    form.name.data = the_menu_item.name
+    form.slug.data = the_menu_item.slug
+    form.menu.data = the_menu_item.menu_id
+    form.weight.data = the_menu_item.weight
 
-    return render_template("admin/menus/menu-item/menu-item.html", js='menus/menu-item/menu-item', form=form, menu_item=menu_item)
+    return render_template("admin/menus/menu-item/menu-item.html", js='menus/menu-item/menu-item', form=form,
+                           menu_item=the_menu_item)
 
 
 @admin.route("/menus/menu/<int:menu_id>/menu-item/new", methods=['GET', 'POST'])
 @login_required
 def add_menu_item(menu_id):
     form = EditMenuItemForm()
-    menu = Menu.query.filter_by(id=menu_id).first()
+    the_menu = Menu.query.filter_by(id=menu_id).first()
 
     if form.validate_on_submit():
-        menu_item = MenuItem()
+        the_menu_item = MenuItem()
 
-        menu_item.name = form.name.data
-        menu_item.slug = form.slug.data
-        menu_item.weight = form.weight.data
-        menu_item.menu_id = form.menu.data
-        menu_item.created_on = datetime.utcnow()
+        the_menu_item.name = form.name.data
+        the_menu_item.slug = form.slug.data
+        the_menu_item.weight = form.weight.data
+        the_menu_item.menu_id = form.menu.data
+        the_menu_item.created_on = datetime.utcnow()
 
-        items = MenuItem.query.filter_by(menu_id=menu_id, name=menu_item.name).all()
+        items = MenuItem.query.filter_by(menu_id=menu_id, name=the_menu_item.name).all()
         if len(items) > 0:
             flash("Menu Item can't use the same name as another item in the same menu")
-            return render_template("admin/menus/menu-item/menu-item.html", form=form, menu_item=menu_item)
+            return render_template("admin/menus/menu-item/menu-item.html", form=form, menu_item=the_menu_item)
 
-        db.session.add(menu_item)
-        flash("{0} has been created".format(menu_item.name))
+        db.session.add(the_menu_item)
+        flash("{0} has been created".format(the_menu_item.name))
 
-        return redirect(url_for(".menu", menu_id=menu_item.menu_id))
+        return redirect(url_for(".menu", menu_id=the_menu_item.menu_id))
 
     form.menu.data = menu_id
 
-    return render_template("admin/menus/menu-item/new.html", js='menus/menu-item/new', form=form, menu=menu)
+    return render_template("admin/menus/menu-item/new.html", js='menus/menu-item/new', form=form, menu=the_menu)
 
 
 @admin.route("/menus/menu/<int:menu_id>/menu-item/delete/<int:item_id>")
 @login_required
 def delete_menu_item(menu_id, item_id):
-    menu_item = MenuItem.query.filter_by(menu_id=menu_id, id=item_id).first()
+    the_menu_item = MenuItem.query.filter_by(menu_id=menu_id, id=item_id).first()
 
-    if menu_item is not None:
-        db.session.delete(menu_item)
+    if the_menu_item is not None:
+        db.session.delete(the_menu_item)
 
-        flash("{0} has been deleted".format(menu_item.name))
+        flash("{0} has been deleted".format(the_menu_item.name))
         return redirect(url_for(".menu", menu_id=menu_id))
 
     flash("That menu item doesn't exist")

@@ -7,6 +7,7 @@ from app.models.MenuItem import MenuItem
 from app.models.Page import Page
 from app.models.BlogPost import BlogPost
 from app.models.BlogCategory import BlogCategory
+from app.models.BlogPostStatus import BlogPostStatus
 
 
 
@@ -144,6 +145,18 @@ def install_with_sample_content(email):
     blogcategory.created_on = datetime.utcnow()
     db.session.add(blogcategory)
 
+    blogpoststatus_draft = BlogPostStatus()
+    blogpoststatus_draft.name = "Draft"
+    db.session.add(blogpoststatus_draft)
+
+    blogpoststatus_published = BlogPostStatus()
+    blogpoststatus_published.name = "Published"
+    db.session.add(blogpoststatus_published)
+
+    blogpoststatus_deleted = BlogPostStatus()
+    blogpoststatus_deleted.name = "Deleted"
+    db.session.add(blogpoststatus_deleted)
+
     blogpost = BlogPost()
     blogpost.title = "Hello World!"
     blogpost.content = """### This is my first post.
@@ -163,6 +176,7 @@ def install_with_sample_content(email):
     blogpost.created_on = datetime.utcnow()
     blogpost.published_on = datetime.utcnow()
     blogpost.blogcategory = blogcategory
+    blogpost.blogpoststatus = blogpoststatus_published
     blogpost.user = user
     db.session.add(blogpost)
 

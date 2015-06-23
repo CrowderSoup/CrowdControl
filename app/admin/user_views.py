@@ -1,18 +1,20 @@
 from datetime import datetime
 from flask import render_template, redirect, url_for, flash, abort
-from flask.ext.login import login_required, current_user
+from flask.ext.login import login_required
 from . import admin
 from app import db
 from app.models.User import User
 from app.models.Role import Role
-from app.admin.forms import EditUserForm, AddUserForm
+from app.admin.forms.EditUserForm import EditUserForm
+from app.admin.forms.AddUserForm import AddUserForm
+
 
 @admin.route('/users')
 @login_required
 def users():
-    users = User.query.all()
+    all_users = User.query.all()
     roles = Role.query.all()
-    return render_template('admin/users/index.html', users=users, roles=roles)
+    return render_template('admin/users/index.html', users=all_users, roles=roles)
 
 
 @admin.route('/users/user/<user_id>', methods=['GET', 'POST'])
@@ -56,6 +58,7 @@ def add_user():
         user.username = form.username.data
         user.password = form.password.data
         user.role_id = form.role.data
+        user.created_on = datetime.utcnow()
 
         db.session.add(user)
         flash('"{0}" has been added'.format(user.username))

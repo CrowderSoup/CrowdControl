@@ -5,7 +5,8 @@ from . import admin
 from app import db
 from app.models.BlogPost import BlogPost
 from app.models.BlogCategory import BlogCategory
-from app.admin.forms import EditPostForm, AddPostForm, EditCategoryForm
+from app.admin.forms.PostForm import PostForm
+from app.admin.forms.EditCategoryForm import EditCategoryForm
 
 
 @admin.route('/blog/posts', defaults={'page': 1})
@@ -19,7 +20,7 @@ def blog_posts(page):
 @admin.route('/blog/posts/post/<post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_blog_post(post_id):
-    form = EditPostForm()
+    form = PostForm()
     post = BlogPost.query.filter_by(id=post_id).first()
 
     if post is None:
@@ -49,7 +50,7 @@ def edit_blog_post(post_id):
 @admin.route('/blog/posts/new', methods=['GET', 'POST'])
 @login_required
 def add_blog_post():
-    form = AddPostForm()
+    form = PostForm()
 
     if form.validate_on_submit():
         post = BlogPost()

@@ -5,7 +5,7 @@ from flask.ext.login import login_required, current_user
 from . import admin
 from app import db
 from app.models.Page import Page
-from .forms import PageForm
+from app.admin.forms.PageForm import PageForm
 
 
 @admin.route('/pages', defaults={'page': 1})
