@@ -1,3 +1,4 @@
+from datetime import datetime
 from werkzeug.contrib.atom import AtomFeed
 from flask import render_template, abort
 from app.models.BlogPost import BlogPost
@@ -16,7 +17,8 @@ def the_blog(page):
     # TODO: make this more dynamic... probably tie it to the page
     main_menu = Menu.query.filter_by(name="Main").first()
 
-    blog_posts = BlogPost.query.order_by(BlogPost.published_on.desc()).paginate(page, 5)
+    blog_posts = BlogPost.query.filter(BlogPost.blogpoststatus_id == 2, BlogPost.published_on <= datetime.utcnow())\
+        .order_by(BlogPost.published_on.desc()).paginate(page, 5)
     categories = BlogCategory.query.all()
 
     # Markdown Parser and Renderer
