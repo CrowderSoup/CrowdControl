@@ -90,9 +90,9 @@ def menu_item(menu_id, item_id):
         the_menu_item.menu_id = form.menu.data
         the_menu_item.weight = form.weight.data
 
-        items = MenuItem.query.filter_by(menu_id=menu_id, name=menu_item.name).all()
+        items = MenuItem.query.filter_by(menu_id=menu_id, name=the_menu_item.name).all()
         for item in items:
-            if item.id != menu_item.id:
+            if item.id != the_menu_item.id:
                 flash("Menu Item can't use the same name as another item in the same menu")
                 return render_template("admin/menus/menu-item/menu-item.html", form=form, menu_item=the_menu_item)
 
