@@ -1,5 +1,6 @@
 from datetime import datetime
 from app import db
+from app.models.SiteSetting import SiteSetting
 from app.models.User import User
 from app.models.Role import Role
 from app.models.Menu import Menu
@@ -17,6 +18,15 @@ def install_with_sample_content(email):
     Creates default and sample data and inserts into the database. Including Users, Roles, Pages, a Blog Post (along
     with a default category), and Photo Gallery with Items.
     """
+
+    # Site Settings
+    ss_posts_per_page = SiteSetting()
+    ss_posts_per_page.name = 'blog_posts_per_page'
+    ss_posts_per_page.value = '5'
+
+    ss_blog_menu = SiteSetting()
+    ss_blog_menu.name = 'blog_menu'
+    ss_blog_menu.value = ''
 
     # Roles
     role = Role()

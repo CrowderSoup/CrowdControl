@@ -3,7 +3,6 @@ from werkzeug.contrib.atom import AtomFeed
 from flask import render_template, abort
 from app.models.BlogPost import BlogPost
 from app.models.BlogCategory import BlogCategory
-from app.models.BlogPostStatus import BlogPostStatus
 from app.models.Menu import Menu
 from app.models.User import User
 from . import blog
@@ -53,8 +52,8 @@ def blog_post(slug):
     main_menu = Menu.query.filter_by(name="Main").first()
 
     the_post = BlogPost.query.filter_by(slug=slug).first()
-
-    if the_post is None:
+    
+    if the_post is None or the_post.blogpoststatus_id != 2:
         abort(404)
 
     # Markdown Parser and Renderer
@@ -90,7 +89,8 @@ def blog_category(slug, page):
     # TODO: make this more dynamic... probably tie it to the page
     main_menu = Menu.query.filter_by(name="Main").first()
 
-    blog_posts = BlogPost.query.filter_by(blogcategory_id=category.id)\
+    blog_posts = BlogPost.query.filter(BlogPost.blogcategory_id == category.id, BlogPost.blogpoststatus_id == 2,
+                                       BlogPost.published_on <= datetime.utcnow())\
         .order_by(BlogPost.published_on.desc()).paginate(page, 5)
     categories = BlogCategory.query.all()
 
