@@ -1,0 +1,45 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ super() }} - Site Settings{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">
+                Site Settings
+                <a href="{{ url_for('.new_site_setting') }}" class="btn btn-primary pull-right">
+                    <i class="fa fa-plus"></i>Add
+                </a>
+            </h1>
+
+            <table class="table table-bordered table-stripped">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Value</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for setting in settings %}
+                        <tr>
+                            <td>{{ setting.name }}</td>
+                            <td>{{ setting.value }}</td>
+                            <td>
+                                <a href="{{ url_for('.edit_site_setting', id=setting.id) }}"
+                                    class="btn btn-primary">
+                                    <i class="fa fa-edit"></i>Edit
+                                </a>
+                                <a href="#" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>Delete
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

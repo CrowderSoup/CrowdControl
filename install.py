@@ -23,10 +23,12 @@ def install_with_sample_content(email):
     ss_posts_per_page = SiteSetting()
     ss_posts_per_page.name = 'blog_posts_per_page'
     ss_posts_per_page.value = '5'
+    db.session.add(ss_posts_per_page)
 
     ss_blog_menu = SiteSetting()
     ss_blog_menu.name = 'blog_menu'
-    ss_blog_menu.value = ''
+    ss_blog_menu.value = '1'
+    db.session.add(ss_blog_menu)
 
     # Roles
     role = Role()

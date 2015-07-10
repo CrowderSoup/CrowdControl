@@ -120,7 +120,8 @@ def edit_blog_category(category_id):
     form.slug.data = category.slug
     form.description.data = category.description
 
-    return render_template('admin/blog/categories/edit_category.html', js='posts/add_edit_category', form=form,
+    return render_template('admin/blog/categories/edit_category.html', \
+                            js='posts/add_edit_category', form=form, \
                            category=category)
 
 
