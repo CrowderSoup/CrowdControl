@@ -55,3 +55,18 @@ def new_site_setting():
         return redirect(url_for('.site_settings'))
 
     return render_template("admin/site-settings/new.html", form=form)
+
+
+@admin.route("/site-settings/setting/delete/<int:id>")
+@login_required
+def delete_site_setting(id):
+    setting = SiteSetting.query.filter_by(id=id).first()
+
+    if(setting is not None):
+        db.session.delete(setting)
+
+        flash('"{0}" has been deleted.'.format(setting.name))
+        return redirect(url_for('.site_settings'))
+
+    flash('Setting does not exist')
+    return redirect(url_for('.site_settings'))
