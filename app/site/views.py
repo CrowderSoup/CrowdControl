@@ -1,6 +1,7 @@
 from flask import render_template, abort
 from app.models.Page import Page
 from app.models.Menu import Menu
+from app.models.SiteSetting import SiteSetting
 from . import site
 import CommonMark
 
@@ -16,6 +17,12 @@ def page(slug):
 
     # Init menu to a blank one
     menu = Menu
+
+    # Get all the site settings
+    site_settings = SiteSetting.query.all()
+    settings = {}
+    for setting in site_settings:
+        settings[setting.name] = setting.value
 
     # Markdown Parser and Renderer
     parser = CommonMark.DocParser()
@@ -50,4 +57,5 @@ def page(slug):
         }
 
     # Let's return the page and menu items
-    return render_template(template_path, page=the_page, menu=menu)
+    return render_template(template_path, page=the_page, menu=menu, \
+                            settings=settings)

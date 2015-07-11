@@ -5,6 +5,7 @@ from app.models.BlogPost import BlogPost
 from app.models.BlogCategory import BlogCategory
 from app.models.Menu import Menu
 from app.models.User import User
+from app.models.SiteSetting import SiteSetting
 from . import blog
 import CommonMark
 
@@ -12,11 +13,21 @@ import CommonMark
 @blog.route('/blog', defaults={'page': 1})
 @blog.route('/blog/<int:page>')
 def the_blog(page):
-    # Get the menu we want to use for this page...
-    # TODO: make this more dynamic... probably tie it to the page
-    main_menu = Menu.query.filter_by(name="Main").first()
+    # Get all the site settings
+    site_settings = SiteSetting.query.all()
+    settings = {}
+    for setting in site_settings:
+        settings[setting.name] = setting.value
 
-    blog_posts = BlogPost.query.filter(BlogPost.blogpoststatus_id == 2, BlogPost.published_on <= datetime.utcnow())\
+    # Get the menu we want to use for this page...
+    if 'blog_menu' in settings and \
+        settings['blog_menu'] is not None:
+        main_menu = Menu.query.filter_by(id=int(settings['blog_menu'])).first()
+    else:
+        main_menu = Menu()
+
+    blog_posts = BlogPost.query.filter(BlogPost.blogpoststatus_id == 2, \
+                                    BlogPost.published_on <= datetime.utcnow())\
         .order_by(BlogPost.published_on.desc()).paginate(page, 5)
     categories = BlogCategory.query.all()
 
@@ -42,7 +53,9 @@ def the_blog(page):
         })
 
     # Let's return the page and menu items
-    return render_template("blog/blog.html", menu=main_menu, blog_posts=blog_posts, posts=posts, categories=categories)
+    return render_template("blog/blog.html", menu=main_menu, \
+                            blog_posts=blog_posts, posts=posts, \
+                            categories=categories, settings=settings)
 
 
 @blog.route('/blog/post/<path:slug>')
@@ -52,7 +65,7 @@ def blog_post(slug):
     main_menu = Menu.query.filter_by(name="Main").first()
 
     the_post = BlogPost.query.filter_by(slug=slug).first()
-    
+
     if the_post is None or the_post.blogpoststatus_id != 2:
         abort(404)
 
