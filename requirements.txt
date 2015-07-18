@@ -20,3 +20,4 @@ blinker
 itsdangerous
 CommonMark
 datatables
+-e git+https://github.com/svpino/rfeed.git@72bbb9a3e86d8b62db4847f3976cc9bae3a25a03#egg=rfeed-master
