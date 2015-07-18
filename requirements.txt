@@ -1,4 +1,5 @@
 gunicorn
+pymysql
 Flask
 Flask-Bootstrap
 Flask-Login
