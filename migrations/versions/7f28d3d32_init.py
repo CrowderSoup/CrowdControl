@@ -75,8 +75,7 @@ def upgrade():
     sa.Column('photogallery_id', sa.Integer(), nullable=True),
     sa.Column('created_on', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['photogallery_id'], ['photogalleries.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('url')
+    sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('photogalleryitems', schema=None) as batch_op:
         batch_op.create_index(batch_op.f('ix_photogalleryitems_title'), ['title'], unique=False)
