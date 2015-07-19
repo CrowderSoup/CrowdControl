@@ -19,7 +19,7 @@ def upgrade():
     op.create_table('sitesettings',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=128), nullable=True),
-    sa.Column('value', sa.String(), nullable=True),
+    sa.Column('value', sa.String(length=4000), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
