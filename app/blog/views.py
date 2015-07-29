@@ -179,7 +179,7 @@ def blog_rss():
 
         #Get username for by-line
         by = User.query.filter_by(id=post.user_id).first().username or "Unknown"
-        post_url = "{0}/{1}".format(root_url, post.slug)
+        post_url = "{0}/post/{1}".format(root_url, post.slug)
 
         item = Item(title = post.title,
                     link = post_url,
@@ -220,7 +220,7 @@ def blog_feed():
         feed.add(post.title, rendered,
                  content_type='html',
                  author=by,
-                 url='{0}/{1}'.format(root_url, post.slug),
+                 url='{0}/post/{1}'.format(root_url, post.slug),
                  updated=post.published_on,
                  published=post.published_on)
 
