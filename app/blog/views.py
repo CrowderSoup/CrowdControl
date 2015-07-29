@@ -170,8 +170,9 @@ def blog_rss():
     parser = CommonMark.DocParser()
     renderer = CommonMark.HTMLRenderer()
 
-    blog_posts = BlogPost.query.order_by(BlogPost.published_on.desc())\
-                                                                .paginate(1, 5)
+    blog_posts = BlogPost.query.filter(BlogPost.blogpoststatus_id == 2, \
+                                    BlogPost.published_on <= datetime.utcnow())\
+        .order_by(BlogPost.published_on.desc()).paginate(1, 5)
 
     for post in blog_posts.items:
         parsed = parser.parse(post.content)
@@ -207,8 +208,9 @@ def blog_feed():
     parser = CommonMark.DocParser()
     renderer = CommonMark.HTMLRenderer()
 
-    blog_posts = BlogPost.query.order_by(BlogPost.published_on.desc())\
-                                                                .paginate(1, 5)
+    blog_posts = BlogPost.query.filter(BlogPost.blogpoststatus_id == 2, \
+                                    BlogPost.published_on <= datetime.utcnow())\
+        .order_by(BlogPost.published_on.desc()).paginate(1, 5)
 
     for post in blog_posts.items:
         parsed = parser.parse(post.content)
