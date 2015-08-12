@@ -10,6 +10,7 @@ Flask-SQLAlchemy
 Flask-Script
 Flask-WTF
 Flask-Restless
+flask-cloudy
 Jinja2
 Mako
 MarkupSafe
