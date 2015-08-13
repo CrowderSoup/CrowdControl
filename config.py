@@ -14,11 +14,11 @@ class Config:
     CROWDCONTROL_MAIL_SENDER = 'CrowdControl Admin <crowdcontrol@crowdersoup.com>'
     CROWDCONTROL_ADMIN = os.environ.get('CROWDCONTROL_ADMIN')
 
-    STORAGE_PROVIDER = "LOCAL",
-    STORAGE_KEY = "",
-    STORAGE_SECRET = "",
-    STORAGE_CONTAINER = "./",
-    STORAGE_SERVER = True,
+    STORAGE_PROVIDER = "LOCAL"
+    STORAGE_KEY = ""
+    STORAGE_SECRET = ""
+    STORAGE_CONTAINER = "./"
+    STORAGE_SERVER = True
     STORAGE_SERVER_URL = "/files"
 
     @staticmethod

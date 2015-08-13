@@ -6,4 +6,5 @@ class File(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), unique=True)
-    photo_galleries = db.relationship('Page', backref='menu', lazy='dynamic')
+    photogalleryitems = db.relationship('PhotoGalleryItem', 
+                                        backref='file', lazy='dynamic')

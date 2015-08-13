@@ -13,7 +13,7 @@ bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
-storage = new Storage()
+storage = Storage()
 
 login_manager = LoginManager()
 
@@ -26,7 +26,7 @@ def create_app(config_name):
     mail.init_app(the_app)
     moment.init_app(the_app)
     db.init_app(the_app)
-    storage.init_app(the_app) 
+    storage.init_app(the_app)
 
     # Let's set up our login handlers
     import app.login_handlers

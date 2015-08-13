@@ -7,7 +7,7 @@ class PhotoGalleryItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), index=True)
     description = db.Column(db.String(512))
-    url = db.Column(db.String(2000))
+    file_id = db.Column(db.Integer, db.ForeignKey('files.id'))
     photogallery_id = db.Column(db.Integer, db.ForeignKey('photogalleries.id'))
     created_on = db.Column(db.DateTime)
 
