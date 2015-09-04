@@ -5,7 +5,6 @@ from flask.ext.mail import Mail
 from flask.ext.moment import Moment
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
-from flask_cloudy import Storage
 from config import config
 from app.jinja_filters import format_datetime
 
@@ -13,7 +12,6 @@ bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
-storage = Storage()
 
 login_manager = LoginManager()
 
@@ -26,7 +24,6 @@ def create_app(config_name):
     mail.init_app(the_app)
     moment.init_app(the_app)
     db.init_app(the_app)
-    storage.init_app(the_app)
 
     # Let's set up our login handlers
     import app.login_handlers
