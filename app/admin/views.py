@@ -7,6 +7,7 @@ import app.admin.blog_views
 import app.admin.user_views
 import  app.admin.menu_views
 import app.admin.settings_views
+import app.admin.file_manager_views
 
 @admin.route('/')
 @login_required

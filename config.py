@@ -13,13 +13,8 @@ class Config:
     CROWDCONTROL_MAIL_SUBJECT_PREFIX = '[CrowdControl]'
     CROWDCONTROL_MAIL_SENDER = 'CrowdControl Admin <crowdcontrol@crowdersoup.com>'
     CROWDCONTROL_ADMIN = os.environ.get('CROWDCONTROL_ADMIN')
-
-    STORAGE_PROVIDER = "LOCAL"
-    STORAGE_KEY = ""
-    STORAGE_SECRET = ""
-    STORAGE_CONTAINER = "./"
-    STORAGE_SERVER = True
-    STORAGE_SERVER_URL = "/files"
+    UPLOAD_DIR = os.path.join(basedir, '/app/static/uploads')
+    ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
     @staticmethod
     def init_app(app):

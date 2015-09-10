@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ super() }} - Index{% endblock %}
+
+{% block page_content %}
+
+    <div class="row page-header">
+        <div class="col-md-8">
+            <h1>File Manager</h1>
+        </div>
+        <div class="col-md-1 col-md-offset-3">
+            <a href="{{ url_for('.upload_file') }}" class="btn btn-primary pull-right">
+                <i class="fa fa-upload"></i>Upload
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
